@@ -1,7 +1,20 @@
 {
     "@@locale": "pt",
-    "counterAppBarTitle": "Counter",
+    "counterAppBarTitle": "Contador",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+        "description": "Texto mostrado no AppBar da página do contador"
+    },
+    "counterInfo": "O valor está em:",
+    "reset":"Reseta os valores",
+    "language":"Altera a linguagem",
+    "theme":"Altera o tema",
+    "increment": "Incrementa",
+    "decrement":"Decrementa",
+    "exit":"Sair do App",
+    "exit_msg": "Deseja realmente sair do App?",
+    "yes":"Sim",
+    "no":"Não",
+    "list_title":"Lista Exemplo",
+    "detail_title":"Detalhe",
+    "edit_profile":"Editar Perfil"
 }

@@ -8,7 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
-import 'app_localizations_es.dart';
 import 'app_localizations_pt.dart';
 
 // ignore_for_file: type=lint
@@ -95,7 +94,6 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('es'),
     Locale('pt')
   ];
 
@@ -104,6 +102,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Counter'**
   String get counterAppBarTitle;
+
+  /// No description provided for @counterInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'The value is at:'**
+  String get counterInfo;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset values'**
+  String get reset;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the language'**
+  String get language;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the theme'**
+  String get theme;
+
+  /// No description provided for @increment.
+  ///
+  /// In en, this message translates to:
+  /// **'Increment'**
+  String get increment;
+
+  /// No description provided for @decrement.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrement'**
+  String get decrement;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit the App'**
+  String get exit;
+
+  /// No description provided for @exit_msg.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to exit the App?'**
+  String get exit_msg;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @list_title.
+  ///
+  /// In en, this message translates to:
+  /// **'List Example'**
+  String get list_title;
+
+  /// No description provided for @detail_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail'**
+  String get detail_title;
+
+  /// No description provided for @edit_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get edit_profile;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -115,7 +191,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'es', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -127,7 +203,6 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return AppLocalizationsEn();
-    case 'es': return AppLocalizationsEs();
     case 'pt': return AppLocalizationsPt();
   }
 
