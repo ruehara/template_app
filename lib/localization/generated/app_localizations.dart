@@ -101,7 +101,7 @@ abstract class AppLocalizations {
 
   /// Text shown in the AppBar of the Counter Page
   ///
-  /// In pt, this message translates to:
+  /// In en, this message translates to:
   /// **'Counter'**
   String get counterAppBarTitle;
 }
