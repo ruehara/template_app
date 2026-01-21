@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_app/counter/counter.dart';
+import 'package:template_app/modules/counter/counter.dart';
 import 'package:template_app/localization/generated/app_localizations.dart';
 
 class App extends StatelessWidget {

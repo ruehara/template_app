@@ -3,7 +3,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:template_app/app/app.dart';
-import 'package:template_app/counter/counter.dart';
+import 'package:template_app/modules/counter/counter.dart';
 
 void main() {
   group('App', () {

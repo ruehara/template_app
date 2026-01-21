@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        enabled: false
+      
+      drift_dev:analyzer:
+        enabled: true
+        options: &options
+          store_date_time_values_as_text: false
+          named_parameters: true
+          sql:
+            dialect: sqlite
+            options:
+              version: "3.45"
+              modules: [fts5, json1, rtree]
+      
+      drift_dev:modular:
+        enabled: true
+        options: *options
