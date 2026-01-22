@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:template_app/app/init/_init.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -35,8 +36,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       DeviceOrientation.portraitDown,
     ]);
 
-    //await loadServiceLocator();
-    //await Maintenance.run();
+    await loadServiceLocator();
+    await Maintenance.run();
 
     runApp(await builder());
   }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
