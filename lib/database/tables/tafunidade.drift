@@ -1,0 +1,6 @@
+import '../helpers/converters.dart';
+
+CREATE TABLE tafunidade (
+    codunidade TEXT NOT NULL PRIMARY KEY MAPPED BY `const TextConverter(36)`,
+    descunidade TEXT NOT NULL MAPPED BY `const TextConverter(36)`
+) As Unidade;

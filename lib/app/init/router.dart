@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:template_app/modules/counter/view/counter_page.dart';
+import 'package:template_app/modules/auth/pages/login_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/login',
@@ -30,7 +30,7 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           key: state.pageKey,
-          child: const CounterPage(),
+          child: const LoginPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: CurveTween(curve: Curves.easeInOut).animate(animation),

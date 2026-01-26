@@ -1,0 +1,6 @@
+import '../helpers/converters.dart';
+
+CREATE TABLE tafperfil (
+    codperfil TEXT NOT NULL PRIMARY KEY MAPPED BY `const TextConverter(36)`,
+    descperfil TEXT NOT NULL MAPPED BY `const TextConverter(50)`
+) As Perfil;

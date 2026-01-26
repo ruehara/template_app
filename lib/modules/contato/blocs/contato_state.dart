@@ -1,0 +1,25 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:template_app/database/tables/tafusuario.drift.dart';
+
+@immutable
+abstract class ContatoState extends Equatable {}
+
+class ContatoLoadingState extends ContatoState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ContatoLoadedState extends ContatoState {
+  ContatoLoadedState(this.contatos);
+  final List<Usuario>? contatos;
+  @override
+  List<Object?> get props => [contatos];
+}
+
+class ContatoErrorState extends ContatoState {
+  ContatoErrorState(this.error);
+  final String error;
+  @override
+  List<Object?> get props => [error];
+}
