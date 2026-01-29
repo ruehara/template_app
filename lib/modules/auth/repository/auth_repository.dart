@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:get_it/get_it.dart';
 import 'package:template_app/app/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/database/database.dart';
+import 'package:uuid/uuid.dart';
 import '../model/auth_user_model.dart';
 
 class AuthRepository {
@@ -160,6 +161,86 @@ class AuthRepository {
       }
     } catch (e) {
       throw Exception('Erro ao atualizar usuário: ${e.toString()}');
+    }
+  }
+
+  Future<void> register({
+    required String name,
+    required String login,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      // Check if user already exists
+      final existingUser = await _database
+          .customSelect(
+            'SELECT * FROM tafusuario WHERE desclogin = ?',
+            variables: [Variable.withString(login)],
+            readsFrom: {_database.tafusuario},
+          )
+          .getSingleOrNull();
+
+      if (existingUser != null) {
+        throw Exception('Usuário já existe');
+      }
+
+      // Fetch default codunidade
+      final unidade = await _database
+          .customSelect(
+            'SELECT codunidade FROM tafunidade LIMIT 1',
+            readsFrom: {_database.tafunidade},
+          )
+          .getSingleOrNull();
+      if (unidade == null) {
+        throw Exception('Nenhuma unidade encontrada. Contate o administrador.');
+      }
+      final codunidade = unidade.read<String>('codunidade');
+
+      // Fetch default codperfil
+      final perfil = await _database
+          .customSelect(
+            'SELECT codperfil FROM tafperfil LIMIT 1',
+            readsFrom: {_database.tafperfil},
+          )
+          .getSingleOrNull();
+      if (perfil == null) {
+        throw Exception('Nenhum perfil encontrado. Contate o administrador.');
+      }
+      final codperfil = perfil.read<String>('codperfil');
+
+      // Fetch default codequipe
+      final equipe = await _database
+          .customSelect(
+            'SELECT codequipe FROM tafequipe LIMIT 1',
+            readsFrom: {_database.tafequipe},
+          )
+          .getSingleOrNull();
+      if (equipe == null) {
+        throw Exception('Nenhuma equipe encontrada. Contate o administrador.');
+      }
+      final codequipe = equipe.read<String>('codequipe');
+
+      final hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+      final uuid = const Uuid().v4();
+
+      await _database.customStatement(
+        '''
+        INSERT INTO tafusuario (codusuario, codunidade, codperfil, codequipe, descnome, desclogin, descemail, descsenha)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''',
+        [
+          uuid,
+          codunidade,
+          codperfil,
+          codequipe,
+          name,
+          login,
+          email,
+          hashedPassword,
+        ],
+      );
+    } catch (e) {
+      throw Exception('Erro ao registrar usuário: ${e.toString()}');
     }
   }
 }

@@ -9,7 +9,7 @@ import 'package:drift/internal/modular.dart' as i4;
 typedef $TafequipeCreateCompanionBuilder =
     i1.TafequipeCompanion Function({
       required String codequipe,
-      required String descnome,
+      required String desequipe,
       required String codunidade,
       required String cdeqpai,
       i0.Value<int> rowid,
@@ -17,7 +17,7 @@ typedef $TafequipeCreateCompanionBuilder =
 typedef $TafequipeUpdateCompanionBuilder =
     i1.TafequipeCompanion Function({
       i0.Value<String> codequipe,
-      i0.Value<String> descnome,
+      i0.Value<String> desequipe,
       i0.Value<String> codunidade,
       i0.Value<String> cdeqpai,
       i0.Value<int> rowid,
@@ -73,9 +73,9 @@ class $TafequipeFilterComposer
         builder: (column) => i0.ColumnWithTypeConverterFilters(column),
       );
 
-  i0.ColumnWithTypeConverterFilters<String, String, String> get descnome =>
+  i0.ColumnWithTypeConverterFilters<String, String, String> get desequipe =>
       $composableBuilder(
-        column: $table.descnome,
+        column: $table.desequipe,
         builder: (column) => i0.ColumnWithTypeConverterFilters(column),
       );
 
@@ -127,8 +127,8 @@ class $TafequipeOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get descnome => $composableBuilder(
-    column: $table.descnome,
+  i0.ColumnOrderings<String> get desequipe => $composableBuilder(
+    column: $table.desequipe,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -177,8 +177,8 @@ class $TafequipeAnnotationComposer
   i0.GeneratedColumnWithTypeConverter<String, String> get codequipe =>
       $composableBuilder(column: $table.codequipe, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<String, String> get descnome =>
-      $composableBuilder(column: $table.descnome, builder: (column) => column);
+  i0.GeneratedColumnWithTypeConverter<String, String> get desequipe =>
+      $composableBuilder(column: $table.desequipe, builder: (column) => column);
 
   i0.GeneratedColumnWithTypeConverter<String, String> get cdeqpai =>
       $composableBuilder(column: $table.cdeqpai, builder: (column) => column);
@@ -240,13 +240,13 @@ class $TafequipeTableManager
           updateCompanionCallback:
               ({
                 i0.Value<String> codequipe = const i0.Value.absent(),
-                i0.Value<String> descnome = const i0.Value.absent(),
+                i0.Value<String> desequipe = const i0.Value.absent(),
                 i0.Value<String> codunidade = const i0.Value.absent(),
                 i0.Value<String> cdeqpai = const i0.Value.absent(),
                 i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.TafequipeCompanion(
                 codequipe: codequipe,
-                descnome: descnome,
+                desequipe: desequipe,
                 codunidade: codunidade,
                 cdeqpai: cdeqpai,
                 rowid: rowid,
@@ -254,13 +254,13 @@ class $TafequipeTableManager
           createCompanionCallback:
               ({
                 required String codequipe,
-                required String descnome,
+                required String desequipe,
                 required String codunidade,
                 required String cdeqpai,
                 i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.TafequipeCompanion.insert(
                 codequipe: codequipe,
-                descnome: descnome,
+                desequipe: desequipe,
                 codunidade: codunidade,
                 cdeqpai: cdeqpai,
                 rowid: rowid,
@@ -345,15 +345,15 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
         requiredDuringInsert: true,
         $customConstraints: 'NOT NULL PRIMARY KEY',
       ).withConverter<String>(i1.Tafequipe.$convertercodequipe);
-  late final i0.GeneratedColumnWithTypeConverter<String, String> descnome =
+  late final i0.GeneratedColumnWithTypeConverter<String, String> desequipe =
       i0.GeneratedColumn<String>(
-        'descnome',
+        'desequipe',
         aliasedName,
         false,
         type: i0.DriftSqlType.string,
         requiredDuringInsert: true,
         $customConstraints: 'NOT NULL',
-      ).withConverter<String>(i1.Tafequipe.$converterdescnome);
+      ).withConverter<String>(i1.Tafequipe.$converterdesequipe);
   late final i0.GeneratedColumnWithTypeConverter<String, String> codunidade =
       i0.GeneratedColumn<String>(
         'codunidade',
@@ -375,7 +375,7 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
   @override
   List<i0.GeneratedColumn> get $columns => [
     codequipe,
-    descnome,
+    desequipe,
     codunidade,
     cdeqpai,
   ];
@@ -396,10 +396,10 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
           data['${effectivePrefix}codequipe'],
         )!,
       ),
-      descnome: i1.Tafequipe.$converterdescnome.fromSql(
+      desequipe: i1.Tafequipe.$converterdesequipe.fromSql(
         attachedDatabase.typeMapping.read(
           i0.DriftSqlType.string,
-          data['${effectivePrefix}descnome'],
+          data['${effectivePrefix}desequipe'],
         )!,
       ),
       codunidade: i1.Tafequipe.$convertercodunidade.fromSql(
@@ -424,7 +424,7 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
 
   static i0.TypeConverter<String, String> $convertercodequipe =
       const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $converterdescnome =
+  static i0.TypeConverter<String, String> $converterdesequipe =
       const i2.TextConverter(50);
   static i0.TypeConverter<String, String> $convertercodunidade =
       const i2.TextConverter(36);
@@ -436,12 +436,12 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
 
 class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
   final String codequipe;
-  final String descnome;
+  final String desequipe;
   final String codunidade;
   final String cdeqpai;
   const Equipe({
     required this.codequipe,
-    required this.descnome,
+    required this.desequipe,
     required this.codunidade,
     required this.cdeqpai,
   });
@@ -454,8 +454,8 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
       );
     }
     {
-      map['descnome'] = i0.Variable<String>(
-        i1.Tafequipe.$converterdescnome.toSql(descnome),
+      map['desequipe'] = i0.Variable<String>(
+        i1.Tafequipe.$converterdesequipe.toSql(desequipe),
       );
     }
     {
@@ -474,7 +474,7 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
   i1.TafequipeCompanion toCompanion(bool nullToAbsent) {
     return i1.TafequipeCompanion(
       codequipe: i0.Value(codequipe),
-      descnome: i0.Value(descnome),
+      desequipe: i0.Value(desequipe),
       codunidade: i0.Value(codunidade),
       cdeqpai: i0.Value(cdeqpai),
     );
@@ -487,7 +487,7 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return Equipe(
       codequipe: serializer.fromJson<String>(json['codequipe']),
-      descnome: serializer.fromJson<String>(json['descnome']),
+      desequipe: serializer.fromJson<String>(json['desequipe']),
       codunidade: serializer.fromJson<String>(json['codunidade']),
       cdeqpai: serializer.fromJson<String>(json['cdeqpai']),
     );
@@ -497,7 +497,7 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'codequipe': serializer.toJson<String>(codequipe),
-      'descnome': serializer.toJson<String>(descnome),
+      'desequipe': serializer.toJson<String>(desequipe),
       'codunidade': serializer.toJson<String>(codunidade),
       'cdeqpai': serializer.toJson<String>(cdeqpai),
     };
@@ -505,19 +505,19 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
 
   i1.Equipe copyWith({
     String? codequipe,
-    String? descnome,
+    String? desequipe,
     String? codunidade,
     String? cdeqpai,
   }) => i1.Equipe(
     codequipe: codequipe ?? this.codequipe,
-    descnome: descnome ?? this.descnome,
+    desequipe: desequipe ?? this.desequipe,
     codunidade: codunidade ?? this.codunidade,
     cdeqpai: cdeqpai ?? this.cdeqpai,
   );
   Equipe copyWithCompanion(i1.TafequipeCompanion data) {
     return Equipe(
       codequipe: data.codequipe.present ? data.codequipe.value : this.codequipe,
-      descnome: data.descnome.present ? data.descnome.value : this.descnome,
+      desequipe: data.desequipe.present ? data.desequipe.value : this.desequipe,
       codunidade: data.codunidade.present
           ? data.codunidade.value
           : this.codunidade,
@@ -529,7 +529,7 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
   String toString() {
     return (StringBuffer('Equipe(')
           ..write('codequipe: $codequipe, ')
-          ..write('descnome: $descnome, ')
+          ..write('desequipe: $desequipe, ')
           ..write('codunidade: $codunidade, ')
           ..write('cdeqpai: $cdeqpai')
           ..write(')'))
@@ -537,50 +537,50 @@ class Equipe extends i0.DataClass implements i0.Insertable<i1.Equipe> {
   }
 
   @override
-  int get hashCode => Object.hash(codequipe, descnome, codunidade, cdeqpai);
+  int get hashCode => Object.hash(codequipe, desequipe, codunidade, cdeqpai);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is i1.Equipe &&
           other.codequipe == this.codequipe &&
-          other.descnome == this.descnome &&
+          other.desequipe == this.desequipe &&
           other.codunidade == this.codunidade &&
           other.cdeqpai == this.cdeqpai);
 }
 
 class TafequipeCompanion extends i0.UpdateCompanion<i1.Equipe> {
   final i0.Value<String> codequipe;
-  final i0.Value<String> descnome;
+  final i0.Value<String> desequipe;
   final i0.Value<String> codunidade;
   final i0.Value<String> cdeqpai;
   final i0.Value<int> rowid;
   const TafequipeCompanion({
     this.codequipe = const i0.Value.absent(),
-    this.descnome = const i0.Value.absent(),
+    this.desequipe = const i0.Value.absent(),
     this.codunidade = const i0.Value.absent(),
     this.cdeqpai = const i0.Value.absent(),
     this.rowid = const i0.Value.absent(),
   });
   TafequipeCompanion.insert({
     required String codequipe,
-    required String descnome,
+    required String desequipe,
     required String codunidade,
     required String cdeqpai,
     this.rowid = const i0.Value.absent(),
   }) : codequipe = i0.Value(codequipe),
-       descnome = i0.Value(descnome),
+       desequipe = i0.Value(desequipe),
        codunidade = i0.Value(codunidade),
        cdeqpai = i0.Value(cdeqpai);
   static i0.Insertable<i1.Equipe> custom({
     i0.Expression<String>? codequipe,
-    i0.Expression<String>? descnome,
+    i0.Expression<String>? desequipe,
     i0.Expression<String>? codunidade,
     i0.Expression<String>? cdeqpai,
     i0.Expression<int>? rowid,
   }) {
     return i0.RawValuesInsertable({
       if (codequipe != null) 'codequipe': codequipe,
-      if (descnome != null) 'descnome': descnome,
+      if (desequipe != null) 'desequipe': desequipe,
       if (codunidade != null) 'codunidade': codunidade,
       if (cdeqpai != null) 'cdeqpai': cdeqpai,
       if (rowid != null) 'rowid': rowid,
@@ -589,14 +589,14 @@ class TafequipeCompanion extends i0.UpdateCompanion<i1.Equipe> {
 
   i1.TafequipeCompanion copyWith({
     i0.Value<String>? codequipe,
-    i0.Value<String>? descnome,
+    i0.Value<String>? desequipe,
     i0.Value<String>? codunidade,
     i0.Value<String>? cdeqpai,
     i0.Value<int>? rowid,
   }) {
     return i1.TafequipeCompanion(
       codequipe: codequipe ?? this.codequipe,
-      descnome: descnome ?? this.descnome,
+      desequipe: desequipe ?? this.desequipe,
       codunidade: codunidade ?? this.codunidade,
       cdeqpai: cdeqpai ?? this.cdeqpai,
       rowid: rowid ?? this.rowid,
@@ -611,9 +611,9 @@ class TafequipeCompanion extends i0.UpdateCompanion<i1.Equipe> {
         i1.Tafequipe.$convertercodequipe.toSql(codequipe.value),
       );
     }
-    if (descnome.present) {
-      map['descnome'] = i0.Variable<String>(
-        i1.Tafequipe.$converterdescnome.toSql(descnome.value),
+    if (desequipe.present) {
+      map['desequipe'] = i0.Variable<String>(
+        i1.Tafequipe.$converterdesequipe.toSql(desequipe.value),
       );
     }
     if (codunidade.present) {
@@ -636,7 +636,7 @@ class TafequipeCompanion extends i0.UpdateCompanion<i1.Equipe> {
   String toString() {
     return (StringBuffer('TafequipeCompanion(')
           ..write('codequipe: $codequipe, ')
-          ..write('descnome: $descnome, ')
+          ..write('desequipe: $desequipe, ')
           ..write('codunidade: $codunidade, ')
           ..write('cdeqpai: $cdeqpai, ')
           ..write('rowid: $rowid')

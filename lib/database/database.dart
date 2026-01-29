@@ -1,6 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:template_app/database/tables/tafequipe.drift.dart';
+import 'package:template_app/database/tables/tafusuario.drift.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
+import 'tables/tafperfil.drift.dart';
+import 'tables/tafunidade.drift.dart';
 
 @DriftDatabase(
   include: {
@@ -47,9 +51,44 @@ class Database extends $Database {
         await customStatement('PRAGMA foreign_keys = ON');
 
         if (details.wasCreated) {
-          // await batch((b) {
-          //   b.insert(users, UsersCompanion.insert(name: 'Important'));
-          // });
+          await batch((b) {
+            b.insert(
+              tafperfil,
+              TafperfilCompanion.insert(
+                codperfil: '01',
+                descperfil: 'Administrador',
+              ),
+            );
+            b.insert(
+              tafunidade,
+              TafunidadeCompanion.insert(
+                codunidade: '01',
+                descunidade: 'Unidade 01',
+              ),
+            );
+            b.insert(
+              tafequipe,
+              TafequipeCompanion.insert(
+                codequipe: '01',
+                desequipe: 'Equipe 01',
+                codunidade: '01',
+                cdeqpai: '01',
+              ),
+            );
+            b.insert(
+              tafusuario,
+              TafusuarioCompanion.insert(
+                codusuario: '0001',
+                codunidade: '01',
+                codperfil: '01',
+                codequipe: '01',
+                descnome: 'Rodrigo Uehara',
+                desclogin: 'rodrigo',
+                descsenha: '123456',
+                descemail: 'rodrigo@email.com',
+              ),
+            );
+          });
         }
         await validateDatabaseSchema(this);
       },

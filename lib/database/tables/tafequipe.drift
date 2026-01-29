@@ -3,7 +3,7 @@ import '../helpers/converters.dart';
 
 CREATE TABLE tafequipe (
     codequipe  TEXT NOT NULL PRIMARY KEY MAPPED BY `const TextConverter(36)`,
-    descnome   TEXT NOT NULL MAPPED BY `const TextConverter(50)`, 
+    desequipe   TEXT NOT NULL MAPPED BY `const TextConverter(50)`, 
     codunidade TEXT NOT NULL MAPPED BY `const TextConverter(36)` REFERENCES tafunidade (codunidade),
     cdeqpai    TEXT NOT NULL MAPPED BY `const TextConverter(36)` REFERENCES tafequipe (codequipe)
 ) as Equipe;
