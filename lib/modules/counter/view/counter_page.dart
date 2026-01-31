@@ -144,6 +144,23 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
               child: const Icon(Icons.dark_mode),
             ),
             const SizedBox(height: 8),
+            // Test crash FAB: triggers an async exception to test reporting
+            FloatingActionButton(
+              elevation: 2.0,
+              heroTag: const Text('crash_test'),
+              tooltip: 'Trigger test exception',
+              backgroundColor: Colors.red,
+              onPressed: () {
+                // Throwing inside a microtask/asynchronous callback so runZonedGuarded captures it
+                Future.delayed(Duration.zero, () {
+                  throw Exception(
+                    'Teste: exceção acionada pelo FAB de teste (CounterPage)',
+                  );
+                });
+              },
+              child: const Icon(Icons.bug_report),
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),

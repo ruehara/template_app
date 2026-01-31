@@ -96,7 +96,7 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
                       onPressed: () {
-                        context.goNamed('edit-profile', extra: user);
+                        context.pushNamed('edit-profile', extra: user);
                       },
                       icon: const Icon(Icons.edit),
                       label: const Text('Editar Perfil'),

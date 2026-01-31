@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:template_app/app/init/_init.dart';
+import 'package:template_app/app/services/logger/logger_service.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -18,6 +19,16 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     log('onError(${bloc.runtimeType}, $error, $stackTrace)');
+    if (getIt.isRegistered<LoggerService>()) {
+      getIt<LoggerService>().logError(
+        error,
+        stackTrace,
+        reason: 'Bloc Error in ${bloc.runtimeType}',
+        sourceClass: bloc.runtimeType.toString(),
+        sourceMethod: 'onError',
+        extra: {'state': bloc.state?.toString()},
+      );
+    }
     super.onError(bloc, error, stackTrace);
   }
 }
@@ -25,20 +36,48 @@ class AppBlocObserver extends BlocObserver {
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
+    if (getIt.isRegistered<LoggerService>()) {
+      getIt<LoggerService>().logError(
+        details.exception,
+        details.stack,
+        reason: 'FlutterError',
+        fatal: true,
+        sourceClass: 'FlutterError',
+        sourceMethod: 'onError',
+        extra: {
+          'context': details.context.toString(),
+          'library': details.library,
+          'summary': details.summary.toString(),
+        },
+      );
+    }
   };
 
   Bloc.observer = const AppBlocObserver();
 
-  await runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
 
-    await loadServiceLocator();
-    await Maintenance.run();
+      await loadServiceLocator();
+      await Maintenance.run();
 
-    runApp(await builder());
-  }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
+      runApp(await builder());
+    },
+    (error, stackTrace) {
+      log(error.toString(), stackTrace: stackTrace);
+      if (getIt.isRegistered<LoggerService>()) {
+        getIt<LoggerService>().logError(
+          error,
+          stackTrace,
+          reason: 'Zone Guarded Error',
+          fatal: true,
+        );
+      }
+    },
+  );
 }

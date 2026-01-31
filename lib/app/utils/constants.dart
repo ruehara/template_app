@@ -23,6 +23,8 @@ const mediaDir = 'Media';
 /// Stores the debug windows path
 const debugWindowsPath = 'build\\windows\\x64\\runner\\Debug';
 
+const logErrorApiUrl = 'http://localhost:5000/api/log';
+
 /// Returns the app path
 String get appPath {
   if (Platform.isWindows) {
