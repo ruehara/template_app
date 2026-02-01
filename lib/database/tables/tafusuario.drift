@@ -4,13 +4,13 @@ import 'tafequipe.drift';
 import '../helpers/converters.dart';
 
 CREATE TABLE tafusuario (
-    codusuario TEXT NOT NULL PRIMARY KEY MAPPED BY `const TextConverter(36)`,
-    codunidade TEXT NOT NULL MAPPED BY `const TextConverter(36)` REFERENCES tafunidade (codunidade),
-    codperfil  TEXT NOT NULL MAPPED BY `const TextConverter(36)` REFERENCES tafperfil (codperfil),
-    codequipe  TEXT NOT NULL MAPPED BY `const TextConverter(36)` REFERENCES tafequipe (codequipe),
-    descnome   TEXT NOT NULL MAPPED BY `const TextConverter(50)`,
-    desclogin  TEXT NOT NULL MAPPED BY `const TextConverter(50)`,
-    descsenha  TEXT NOT NULL MAPPED BY `const TextConverter(255)`,
-    descemail  TEXT NOT NULL MAPPED BY `const TextConverter(100)`
+    codusuario TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
+    codunidade TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafunidade (codunidade),
+    codperfil  TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafperfil (codperfil),
+    codequipe  TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafequipe (codequipe),
+    descnome   TEXT NOT NULL MAPPED BY `const Length(50)`,
+    desclogin  TEXT NOT NULL MAPPED BY `const Length(50)`,
+    descsenha  TEXT NOT NULL MAPPED BY `const Length(255)`,
+    descemail  TEXT NOT NULL MAPPED BY `const Length(100)`
     
 ) as Usuario;

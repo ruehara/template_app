@@ -213,9 +213,9 @@ class Tafunidade extends i0.Table with i0.TableInfo<Tafunidade, i1.Unidade> {
   }
 
   static i0.TypeConverter<String, String> $convertercodunidade =
-      const i2.TextConverter(36);
+      const i2.Length(36);
   static i0.TypeConverter<String, String> $converterdescunidade =
-      const i2.TextConverter(36);
+      const i2.Length(36);
   @override
   bool get dontWriteConstraints => true;
 }

@@ -422,14 +422,17 @@ class Tafequipe extends i0.Table with i0.TableInfo<Tafequipe, i1.Equipe> {
     return Tafequipe(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<String, String> $convertercodequipe =
-      const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $converterdesequipe =
-      const i2.TextConverter(50);
+  static i0.TypeConverter<String, String> $convertercodequipe = const i2.Length(
+    36,
+  );
+  static i0.TypeConverter<String, String> $converterdesequipe = const i2.Length(
+    50,
+  );
   static i0.TypeConverter<String, String> $convertercodunidade =
-      const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $convertercdeqpai =
-      const i2.TextConverter(36);
+      const i2.Length(36);
+  static i0.TypeConverter<String, String> $convertercdeqpai = const i2.Length(
+    36,
+  );
   @override
   bool get dontWriteConstraints => true;
 }

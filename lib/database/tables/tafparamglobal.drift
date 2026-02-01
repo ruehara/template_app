@@ -1,0 +1,8 @@
+import '../helpers/converters.dart';
+
+CREATE TABLE tafparamglobal (
+    codparam   TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`, 
+    descparam   TEXT NOT NULL MAPPED BY `const Length(100)`, 
+    valparam   TEXT NOT NULL MAPPED BY `const Length(200)`,
+    tipoparam  TEXT NOT NULL MAPPED BY `const Length(20)`
+) as ParamGlobal;

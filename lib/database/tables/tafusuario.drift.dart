@@ -803,21 +803,27 @@ class Tafusuario extends i0.Table with i0.TableInfo<Tafusuario, i1.Usuario> {
   }
 
   static i0.TypeConverter<String, String> $convertercodusuario =
-      const i2.TextConverter(36);
+      const i2.Length(36);
   static i0.TypeConverter<String, String> $convertercodunidade =
-      const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $convertercodperfil =
-      const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $convertercodequipe =
-      const i2.TextConverter(36);
-  static i0.TypeConverter<String, String> $converterdescnome =
-      const i2.TextConverter(50);
-  static i0.TypeConverter<String, String> $converterdesclogin =
-      const i2.TextConverter(50);
-  static i0.TypeConverter<String, String> $converterdescsenha =
-      const i2.TextConverter(255);
-  static i0.TypeConverter<String, String> $converterdescemail =
-      const i2.TextConverter(100);
+      const i2.Length(36);
+  static i0.TypeConverter<String, String> $convertercodperfil = const i2.Length(
+    36,
+  );
+  static i0.TypeConverter<String, String> $convertercodequipe = const i2.Length(
+    36,
+  );
+  static i0.TypeConverter<String, String> $converterdescnome = const i2.Length(
+    50,
+  );
+  static i0.TypeConverter<String, String> $converterdesclogin = const i2.Length(
+    50,
+  );
+  static i0.TypeConverter<String, String> $converterdescsenha = const i2.Length(
+    255,
+  );
+  static i0.TypeConverter<String, String> $converterdescemail = const i2.Length(
+    100,
+  );
   @override
   bool get dontWriteConstraints => true;
 }

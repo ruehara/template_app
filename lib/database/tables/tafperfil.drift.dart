@@ -209,10 +209,11 @@ class Tafperfil extends i0.Table with i0.TableInfo<Tafperfil, i1.Perfil> {
     return Tafperfil(attachedDatabase, alias);
   }
 
-  static i0.TypeConverter<String, String> $convertercodperfil =
-      const i2.TextConverter(36);
+  static i0.TypeConverter<String, String> $convertercodperfil = const i2.Length(
+    36,
+  );
   static i0.TypeConverter<String, String> $converterdescperfil =
-      const i2.TextConverter(50);
+      const i2.Length(50);
   @override
   bool get dontWriteConstraints => true;
 }
