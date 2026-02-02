@@ -1,0 +1,11 @@
+import '../helpers/converters.dart';
+import 'tafperfil.drift';
+
+CREATE TABLE tafparamperfil (
+    codparam   TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`, 
+    descparam   TEXT NOT NULL MAPPED BY `const Length(100)`, 
+    valparam   TEXT NOT NULL MAPPED BY `const Length(200)`,
+    tipoparam  TEXT NOT NULL MAPPED BY `const Length(20)`,
+    codperfil  TEXT NOT NULL MAPPED BY `const Length(36)`,
+    FOREIGN KEY (codperfil) REFERENCES tafperfil(codperfil)
+) as ParamPerfil;
