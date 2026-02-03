@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:template_app/database/database.dart';
-import 'package:template_app/database/tables/tafusuario.drift.dart';
+import 'package:template_app/database/tables/schema.drift.dart';
 
 class ContatoRepository {
   final Database db = GetIt.instance<Database>();

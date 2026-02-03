@@ -20,8 +20,9 @@ final GoRouter router = GoRouter(
   redirect: (context, state) {
     final isAuthenticated = GetIt.instance<AppSharedPreferences>()
         .isAuthenticated();
-    final isLoginRoute = state.matchedLocation == '/login';
-    final isRegisterRoute = state.matchedLocation == '/register';
+    final currentPath = state.uri.path;
+    final isLoginRoute = currentPath == '/login';
+    final isRegisterRoute = currentPath == '/register';
 
     // If not authenticated and not on login/register page, redirect to login
     if (!isAuthenticated && !isLoginRoute && !isRegisterRoute) {

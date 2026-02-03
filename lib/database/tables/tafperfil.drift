@@ -1,6 +1,0 @@
-import '../helpers/converters.dart';
-
-CREATE TABLE tafperfil (
-    codperfil TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
-    descperfil TEXT NOT NULL MAPPED BY `const Length(50)`
-) As Perfil;

@@ -1,18 +1,10 @@
 import 'package:drift/drift.dart';
-import 'package:template_app/database/tables/tafequipe.drift.dart';
-import 'package:template_app/database/tables/tafusuario.drift.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
-import 'tables/tafperfil.drift.dart';
-import 'tables/tafunidade.drift.dart';
+import 'tables/schema.drift.dart';
 
 @DriftDatabase(
-  include: {
-    'tables/tafequipe.drift',
-    'tables/tafperfil.drift',
-    'tables/tafunidade.drift',
-    'tables/tafusuario.drift',
-  },
+  include: {'tables/schema.drift'},
   //daos: [MyAccessor],
 )
 class Database extends $Database {

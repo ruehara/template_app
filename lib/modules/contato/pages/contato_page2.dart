@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/database/tables/tafusuario.drift.dart';
+import 'package:template_app/database/tables/schema.drift.dart';
 import 'package:template_app/localization/l10n.dart';
 import '../blocs/contato_bloc.dart';
 import '../blocs/contato_events.dart';
