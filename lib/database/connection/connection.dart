@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:template_app/app/utils/constants.dart';
+import 'package:template_app/database/helpers/logger.dart';
 
 Future<File> get databaseFile async {
   final dbPath = p.join(appPath, databaseDir, databaseName);
@@ -14,7 +15,7 @@ DatabaseConnection connect() {
     Future(() async {
       return NativeDatabase.createBackgroundConnection(await databaseFile);
     }),
-  );
+  ).interceptWith(DatabaseLogger());
 }
 
 Future<void> validateDatabaseSchema(GeneratedDatabase database) async {

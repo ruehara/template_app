@@ -95,14 +95,6 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
           children: [
             FloatingActionButton(
               elevation: 1.5,
-              heroTag: const Text('db'),
-              mini: true,
-              onPressed: () => context.pushNamed('contato'),
-              child: const Icon(Icons.data_usage),
-            ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              elevation: 1.5,
               heroTag: const Text('db2'),
               mini: true,
               onPressed: () => context.pushNamed('contato2'),
