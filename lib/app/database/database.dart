@@ -1,4 +1,7 @@
+import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:template_app/app/init/_init.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
 import 'tables/schema.drift.dart';
@@ -41,8 +44,8 @@ class Database extends $Database {
       }),
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');
-
         if (details.wasCreated) {
+          await getIt<SharedPreferences>().clear();
           await batch((b) {
             b.insert(
               tafperfil,
@@ -76,7 +79,7 @@ class Database extends $Database {
                 codequipe: '01',
                 descnome: 'Rodrigo Uehara',
                 desclogin: 'rodrigo',
-                descsenha: '123456',
+                descsenha: BCrypt.hashpw('123456', BCrypt.gensalt()),
                 descemail: 'rodrigo@email.com',
               ),
             );

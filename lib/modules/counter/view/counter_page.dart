@@ -7,8 +7,8 @@ import 'package:template_app/app/init/injection.dart';
 import 'package:template_app/app/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/app/services/theme/cubit/theme_cubit.dart';
 import 'package:template_app/app/utils/exit_dialog.dart';
-import 'package:template_app/localization/cubit/language_cubit.dart';
-import 'package:template_app/localization/l10n.dart';
+import 'package:template_app/app/services/localization/cubit/language_cubit.dart';
+import 'package:template_app/app/services/localization/l10n.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});

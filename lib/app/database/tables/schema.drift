@@ -1,32 +1,32 @@
 import '../helpers/converters.dart';
 
 CREATE TABLE tafunidade (
-    codunidade TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
+    codunidade  TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
     descunidade TEXT NOT NULL MAPPED BY `const Length(36)`
 ) As Unidade;
 
 CREATE TABLE tafperfil (
-    codperfil TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
+    codperfil  TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
     descperfil TEXT NOT NULL MAPPED BY `const Length(50)`
 ) As Perfil;
 
 CREATE TABLE tafequipe (
-    codequipe  TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
+    codequipe   TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`,
     desequipe   TEXT NOT NULL MAPPED BY `const Length(50)`, 
-    codunidade TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafunidade (codunidade),
-    cdeqpai    TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafequipe (codequipe)
+    codunidade  TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafunidade (codunidade),
+    cdeqpai     TEXT NOT NULL MAPPED BY `const Length(36)` REFERENCES tafequipe (codequipe)
 ) as Equipe;
 
 CREATE TABLE tafparamglobal (
     codparam   TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`, 
-    descparam   TEXT NOT NULL MAPPED BY `const Length(100)`, 
+    descparam  TEXT NOT NULL MAPPED BY `const Length(100)`, 
     valparam   TEXT NOT NULL MAPPED BY `const Length(200)`,
     tipoparam  TEXT NOT NULL MAPPED BY `const Length(20)`
 ) as ParamGlobal;
 
 CREATE TABLE tafparamperfil (
     codparam   TEXT NOT NULL PRIMARY KEY MAPPED BY `const Length(36)`, 
-    descparam   TEXT NOT NULL MAPPED BY `const Length(100)`, 
+    descparam  TEXT NOT NULL MAPPED BY `const Length(100)`, 
     valparam   TEXT NOT NULL MAPPED BY `const Length(200)`,
     tipoparam  TEXT NOT NULL MAPPED BY `const Length(20)`,
     codperfil  TEXT NOT NULL MAPPED BY `const Length(36)`,
@@ -42,5 +42,4 @@ CREATE TABLE tafusuario (
     desclogin  TEXT NOT NULL MAPPED BY `const Length(50)`,
     descsenha  TEXT NOT NULL MAPPED BY `const Length(255)`,
     descemail  TEXT NOT NULL MAPPED BY `const Length(100)`
-    
 ) as Usuario;

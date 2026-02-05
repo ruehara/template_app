@@ -1,7 +1,7 @@
-arb-dir: lib/localization/arb
+arb-dir: lib/app/services/localization/arb
 template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
-output-dir: lib/localization/generated
+output-dir: lib/app/services/localization/generated
 nullable-getter: false
 
 # Needed to ensure the formatter does not run on the generated files.

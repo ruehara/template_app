@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_app/localization/l10n.dart';
+import 'package:template_app/app/services/localization/l10n.dart';
 import '../model/user_model.dart';
 
 class UserDetail extends StatelessWidget {

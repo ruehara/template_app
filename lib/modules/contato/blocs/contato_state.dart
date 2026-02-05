@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:template_app/database/tables/schema.drift.dart';
+import 'package:template_app/app/database/tables/schema.drift.dart';
 
 @immutable
 abstract class ContatoState extends Equatable {}
