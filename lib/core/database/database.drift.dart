@@ -1,7 +1,7 @@
 // dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
-import 'package:template_app/app/database/tables/schema.drift.dart' as i1;
+import 'package:template_app/core/database/tables/schema.drift.dart' as i1;
 
 abstract class $Database extends i0.GeneratedDatabase {
   $Database(i0.QueryExecutor e) : super(e);

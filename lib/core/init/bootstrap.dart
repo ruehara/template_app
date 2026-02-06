@@ -4,8 +4,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:template_app/app/init/_init.dart';
-import 'package:template_app/app/services/logger/logger_service.dart';
+import 'package:template_app/core/init/_init.dart';
+import 'package:template_app/core/services/logger/logger_service.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

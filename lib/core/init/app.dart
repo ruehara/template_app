@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/app/init/_init.dart';
-import 'package:template_app/app/services/theme/_theme.dart';
-import 'package:template_app/app/utils/_utils.dart';
-import 'package:template_app/app/services/localization/cubit/language_cubit.dart';
-import 'package:template_app/app/services/localization/generated/app_localizations.dart';
+import 'package:template_app/core/init/_init.dart';
+import 'package:template_app/core/services/theme/_theme.dart';
+import 'package:template_app/core/utils/_utils.dart';
+import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
+import 'package:template_app/core/services/localization/generated/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

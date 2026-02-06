@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:template_app/app/services/shared_prefs/shared_preferences.dart';
+import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/modules/auth/model/auth_user_model.dart';
 import 'package:template_app/modules/auth/pages/create_user_page.dart';
 import 'package:template_app/modules/auth/pages/edit_user_page.dart';

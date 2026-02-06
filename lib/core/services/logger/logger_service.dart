@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:template_app/app/utils/constants.dart';
+import 'package:template_app/core/utils/constants.dart';
 
 class LoggerService {
   final String _apiUrl = logErrorApiUrl;

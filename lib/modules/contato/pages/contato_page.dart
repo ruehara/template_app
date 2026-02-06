@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/app/database/tables/schema.drift.dart';
-import 'package:template_app/app/services/localization/l10n.dart';
+import 'package:template_app/core/database/tables/schema.drift.dart';
+import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/contato_bloc.dart';
 import '../blocs/contato_events.dart';
 import '../blocs/contato_state.dart';

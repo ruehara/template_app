@@ -1,8 +1,8 @@
 // dart format width=80
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
-import 'package:template_app/app/database/tables/schema.drift.dart' as i1;
-import 'package:template_app/app/database/helpers/converters.dart' as i2;
+import 'package:template_app/core/database/tables/schema.drift.dart' as i1;
+import 'package:template_app/core/database/helpers/converters.dart' as i2;
 import 'package:drift/internal/modular.dart' as i3;
 
 typedef $TafunidadeCreateCompanionBuilder =

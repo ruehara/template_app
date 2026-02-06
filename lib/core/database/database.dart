@@ -1,7 +1,7 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:template_app/app/init/_init.dart';
+import 'package:template_app/core/init/_init.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
 import 'tables/schema.drift.dart';

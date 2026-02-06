@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:template_app/app/services/logger/logger_service.dart';
-import 'package:template_app/app/services/shared_prefs/shared_preferences.dart';
-import 'package:template_app/app/services/theme/_theme.dart';
-import 'package:template_app/app/database/connection/connection.dart';
-import 'package:template_app/app/database/database.dart';
-import 'package:template_app/app/services/localization/cubit/language_cubit.dart';
+import 'package:template_app/core/services/logger/logger_service.dart';
+import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
+import 'package:template_app/core/services/theme/_theme.dart';
+import 'package:template_app/core/database/connection/connection.dart';
+import 'package:template_app/core/database/database.dart';
+import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
 import 'package:template_app/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app/modules/auth/repository/auth_repository.dart';
 

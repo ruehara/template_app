@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:template_app/app/database/database.dart';
-import 'package:template_app/app/database/tables/schema.drift.dart';
+import 'package:template_app/core/database/database.dart';
+import 'package:template_app/core/database/tables/schema.drift.dart';
 
 class ContatoRepository {
   final Database db = GetIt.instance<Database>();

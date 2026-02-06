@@ -1,8 +1,8 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
 import 'package:get_it/get_it.dart';
-import 'package:template_app/app/services/shared_prefs/shared_preferences.dart';
-import 'package:template_app/app/database/database.dart';
+import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
+import 'package:template_app/core/database/database.dart';
 import 'package:uuid/uuid.dart';
 import '../model/auth_user_model.dart';
 

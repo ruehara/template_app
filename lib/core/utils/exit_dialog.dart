@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_app/app/services/localization/l10n.dart';
+import 'package:template_app/core/services/localization/l10n.dart';
 
 class ExitPopupDialog {
   ExitPopupDialog._();

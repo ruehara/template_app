@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
-import 'package:template_app/app/utils/constants.dart';
+import 'package:template_app/core/utils/constants.dart';
 
 class Maintenance {
   static Future<void> run() async {
