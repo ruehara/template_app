@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:template_app/core/init/injection.dart';
+import 'package:template_app/core/app_config/injection.dart';
 import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/core/services/theme/cubit/theme_cubit.dart';
 import 'package:template_app/core/utils/exit_dialog.dart';

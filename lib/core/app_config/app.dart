@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/core/init/_init.dart';
+import 'package:template_app/core/app_config/_app_config.dart';
 import 'package:template_app/core/services/theme/_theme.dart';
 import 'package:template_app/core/utils/_utils.dart';
 import 'package:template_app/core/services/localization/cubit/language_cubit.dart';

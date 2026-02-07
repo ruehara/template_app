@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/core/init/_init.dart';
+import 'package:template_app/core/app_config/_app_config.dart';
 import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
 
 part 'theme_state.dart';
