@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:template_app/core/utils/constants.dart';
+import 'package:template_app/core/utils/env.dart';
 
 class LoggerService {
-  final String _apiUrl = logErrorApiUrl;
+  final String _apiUrl = Env.logErrorApiUrl;
 
   /// Logs an error to the console and sends it to the remote API.
   Future<void> logError(

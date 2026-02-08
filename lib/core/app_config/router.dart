@@ -140,7 +140,7 @@ final GoRouter router = GoRouter(
       path: '/userdetail',
       name: 'userdetail',
       pageBuilder: (context, state) {
-        UserModel sample = state.extra as UserModel;
+        final UserModel sample = state.extra as UserModel;
         return CustomTransitionPage(
           transitionDuration: const Duration(milliseconds: 400),
           key: state.pageKey,

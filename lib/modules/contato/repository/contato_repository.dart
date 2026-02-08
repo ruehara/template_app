@@ -5,7 +5,7 @@ import 'package:template_app/core/database/tables/schema.drift.dart';
 class ContatoRepository {
   final Database db = GetIt.instance<Database>();
   Future<List<Usuario>?> getContatos() async {
-    return await db
+    return db
         .customSelect('select codusuario, descnome from tafusuario')
         .get()
         .then((rows) {
@@ -27,7 +27,7 @@ class ContatoRepository {
   }
 
   Future<List<Usuario>?> getStreamContatos() async {
-    return await db
+    return db
         .customSelect('select codusuario, descnome from tafusuario')
         .get()
         .then((rows) {

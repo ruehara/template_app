@@ -7,14 +7,14 @@ import '../model/user_model.dart';
 class UserRepository {
   var url = Uri.http('randomuser.me', '/api/', {'results': '50'});
   Future<List<UserModel>> getUsers() async {
-    var client = http.Client();
+    final client = http.Client();
     Response response;
     try {
       response = await client.get(url);
 
       if (response.statusCode == 200) {
-        final List result = convert.jsonDecode(response.body)['results'];
-        return result.map((e) => UserModel.fromJson(e)).toList();
+        final List<dynamic> result = convert.jsonDecode(response.body)['results'] as List<dynamic>;
+        return result.map((e) => UserModel.fromJson(e as Map<String, dynamic>)).toList();
       } else {
         throw Exception(response.reasonPhrase);
       }

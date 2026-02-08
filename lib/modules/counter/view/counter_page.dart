@@ -43,9 +43,11 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
   Future<AppExitResponse> didRequestAppExit() async {
     AppExitResponse response = AppExitResponse.cancel;
     if (context.mounted) {
-      response = await ExitPopupDialog.show(
-        context,
-      ).then((value) => value ? AppExitResponse.exit : AppExitResponse.cancel);
+      response = await ExitPopupDialog.show(context).then(
+        (value) => (value as bool? ?? false)
+            ? AppExitResponse.exit
+            : AppExitResponse.cancel,
+      );
     }
     if (response == AppExitResponse.cancel) {
       return response;
@@ -56,9 +58,9 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
 
   Future<bool> exitApp() async {
     if (!context.canPop()) {
-      bool ret = await ExitPopupDialog.show(
+      final bool ret = await ExitPopupDialog.show(
         context,
-      ).then((value) => value ? true : false);
+      ).then((value) => (value as bool?) ?? false);
       if (ret) {
         exit(0);
       }

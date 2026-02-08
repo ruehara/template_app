@@ -14,7 +14,7 @@ class PreferencesConverter extends TypeConverter<Preferences, String>
 
   @override
   Preferences fromSql(String fromDb) {
-    return fromJson(json.decode(fromDb));
+    return fromJson(json.decode(fromDb) as Map<String, Object?>);
   }
 
   @override

@@ -28,7 +28,8 @@ class ContatoPage2 extends StatelessWidget {
               if (state is ContatoLoadingState) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is ContatoLoadedState) {
-                List<Usuario>? userList = state.contatos; //state.contatos;
+                final List<Usuario>? userList =
+                    state.contatos; //state.contatos;
                 return ListView.builder(
                   itemCount: userList?.length, //userList
                   itemBuilder: (_, index) {

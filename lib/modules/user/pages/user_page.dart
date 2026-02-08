@@ -30,7 +30,7 @@ class UserPage extends StatelessWidget {
               if (state is UserLoadingState) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is UserLoadedState) {
-                List<UserModel> userList = state.users;
+                final List<UserModel> userList = state.users;
                 return ListView.builder(
                   itemCount: userList.length,
                   itemBuilder: (_, index) {

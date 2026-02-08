@@ -13,11 +13,11 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['login']['uuid'] ?? '',
-      age: json['dob']['age'] ?? 0,
+      id: (json['login']['uuid'] as String?) ?? '',
+      age: (json['dob']['age'] as int?) ?? 0,
       name:
-          '${json['name']['first'] ?? 'Name'} ${json['name']['last'] ?? 'Last'}',
-      profilePicture: json['picture']['large'] ?? '',
+          '${(json['name']['first'] as String?) ?? 'Name'} ${(json['name']['last'] as String?) ?? 'Last'}',
+      profilePicture: (json['picture']['large'] as String?) ?? '',
     );
   }
   @override

@@ -44,7 +44,13 @@ class Database extends $Database {
       }),
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');
-        if (details.wasCreated) {
+        // Only seed database if DB_SEED_ENABLED is set to 'true' (via dart-define)
+        if (details.wasCreated &&
+            const String.fromEnvironment(
+                  'DB_SEED_ENABLED',
+                  defaultValue: 'true',
+                ) ==
+                'true') {
           await getIt<SharedPreferences>().clear();
           await batch((b) {
             b.insert(

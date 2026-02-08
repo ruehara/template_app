@@ -112,3 +112,15 @@ app.*.map.json
 
 # Generated l10n files
 lib/l10n/gen/
+lib/core/services/localization/generated/
+
+# Generated Drift files (database code generation)
+**/*.drift.dart
+lib/core/database/database.g.dart
+
+# Generated build_runner files
+**/*.g.dart
+**/*.freezed.dart
+
+# Generated files directory
+.dart_tool/build/
