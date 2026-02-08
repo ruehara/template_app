@@ -2,7 +2,6 @@
 
 ![coverage][coverage_badge]
 [![style: flutter lints][flutter_lints_badge]][flutter_lints_link]
-[![License: MIT][license_badge]][license_link]
 
 A feature-rich Flutter template with BLoC architecture, Drift database, flavors, and comprehensive CI/CD.
 
@@ -295,15 +294,9 @@ See [.github/workflows/ci.yaml](.github/workflows/ci.yaml) for details.
 
 ---
 
-## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 [coverage_badge]: coverage_badge.svg
 [flutter_lints_badge]: https://img.shields.io/badge/style-flutter__lints-blue.svg
 [flutter_lints_link]: https://pub.dev/packages/flutter_lints
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
+
