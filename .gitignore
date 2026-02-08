@@ -19,7 +19,6 @@ migrate_working_dir/
 # Visual Studio Code related
 .classpath
 .project
-.settings/
 .vscode/*
 
 # packages file containing multi-root paths
