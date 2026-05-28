@@ -41,7 +41,6 @@ class _EditUserPageState extends State<EditUserPage> {
 
   void _handleUpdate(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      // Get password value, null if empty
       final senha = _senhaController.text.trim().isEmpty
           ? null
           : _senhaController.text;
@@ -69,27 +68,28 @@ class _EditUserPageState extends State<EditUserPage> {
           padding: const EdgeInsets.all(16.0),
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is UserUpdated) {
-                // Show success message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Perfil atualizado com sucesso!'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                // Navigate back to profile page
-                context.pop();
-              } else if (state is AuthError) {
-                // Show error message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ),
-                );
+              switch (state) {
+                case UserUpdated():
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(context.l10n.profileUpdatedSuccess),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  context.pop();
+                case AuthError(:final message):
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                default:
+                  break;
               }
             },
             builder: (context, state) {
+              final l10n = context.l10n;
               final isLoading = state is AuthLoading;
 
               return Form(
@@ -109,22 +109,22 @@ class _EditUserPageState extends State<EditUserPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Informações do Usuário',
+                              l10n.userInfoTitle,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const Divider(),
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _nomeController,
-                              decoration: const InputDecoration(
-                                labelText: 'Nome',
-                                prefixIcon: Icon(Icons.person),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.nameLabel,
+                                prefixIcon: const Icon(Icons.person),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o nome';
+                                  return l10n.nameRequired;
                                 }
                                 return null;
                               },
@@ -132,15 +132,15 @@ class _EditUserPageState extends State<EditUserPage> {
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _loginController,
-                              decoration: const InputDecoration(
-                                labelText: 'Login',
-                                prefixIcon: Icon(Icons.account_circle),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.loginLabel,
+                                prefixIcon: const Icon(Icons.account_circle),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o login';
+                                  return l10n.loginRequired;
                                 }
                                 return null;
                               },
@@ -149,9 +149,8 @@ class _EditUserPageState extends State<EditUserPage> {
                             TextFormField(
                               controller: _senhaController,
                               decoration: InputDecoration(
-                                labelText: 'Nova Senha (opcional)',
-                                helperText:
-                                    'Deixe em branco para manter a senha atual',
+                                labelText: l10n.newPasswordLabel,
+                                helperText: l10n.passwordHelperText,
                                 prefixIcon: const Icon(Icons.lock),
                                 border: const OutlineInputBorder(),
                                 suffixIcon: IconButton(
@@ -176,37 +175,36 @@ class _EditUserPageState extends State<EditUserPage> {
                     ),
                     const SizedBox(height: 16),
                     Card(
-                      color: Colors.grey[100],
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Informações Somente Leitura',
+                              l10n.readonlyInfoTitle,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Divider(),
                             const SizedBox(height: 8),
                             _buildReadOnlyRow(
                               context,
-                              'Email',
+                              l10n.emailLabel,
                               widget.user.descemail,
                             ),
                             const SizedBox(height: 8),
                             _buildReadOnlyRow(
                               context,
-                              'Unidade',
+                              l10n.unitLabel,
                               widget.user.descunidade.isEmpty
-                                  ? 'Não definido'
+                                  ? l10n.notDefined
                                   : widget.user.descunidade,
                             ),
                             const SizedBox(height: 8),
                             _buildReadOnlyRow(
                               context,
-                              'Perfil',
+                              l10n.fieldRole,
                               widget.user.descperfil.isEmpty
-                                  ? 'Não definido'
+                                  ? l10n.notDefined
                                   : widget.user.descperfil,
                             ),
                           ],
@@ -227,15 +225,15 @@ class _EditUserPageState extends State<EditUserPage> {
                               width: 20,
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
-                          : const Text(
-                              'Salvar Alterações',
-                              style: TextStyle(fontSize: 16),
+                          : Text(
+                              l10n.saveChangesButton,
+                              style: const TextStyle(fontSize: 16),
                             ),
                     ),
                     const SizedBox(height: 8),
                     TextButton(
                       onPressed: isLoading ? null : () => context.pop(),
-                      child: const Text('Cancelar'),
+                      child: Text(l10n.cancelButton),
                     ),
                   ],
                 ),

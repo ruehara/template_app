@@ -1,52 +1,86 @@
 import 'package:drift/drift.dart' hide isNotNull;
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:template_app/core/database/database.dart';
+import 'package:template_app/core/database/tables/schema.drift.dart';
 import 'package:template_app/modules/contato/repository/contato_repository.dart';
-import '../../helpers/mock_database.dart';
-import '../../helpers/test_helpers.dart';
+
+Database _createTestDatabase() =>
+    Database(DatabaseConnection(NativeDatabase.memory()));
+
+Future<void> _insertTestUser(
+  Database db, {
+  required String codusuario,
+  required String descnome,
+  String codunidade = 'U01',
+  String codperfil = 'P01',
+  String codequipe = 'E01',
+}) async {
+  await db.batch((b) {
+    b.insert(
+      db.tafunidade,
+      TafunidadeCompanion.insert(
+        codunidade: codunidade,
+        descunidade: 'Unidade 01',
+      ),
+      mode: InsertMode.insertOrReplace,
+    );
+    b.insert(
+      db.tafperfil,
+      TafperfilCompanion.insert(
+        codperfil: codperfil,
+        descperfil: 'Administrador',
+      ),
+      mode: InsertMode.insertOrReplace,
+    );
+    b.insert(
+      db.tafequipe,
+      TafequipeCompanion.insert(
+        codequipe: codequipe,
+        desequipe: 'Equipe 01',
+        codunidade: codunidade,
+        cdeqpai: codequipe,
+      ),
+      mode: InsertMode.insertOrReplace,
+    );
+    b.insert(
+      db.tafusuario,
+      TafusuarioCompanion.insert(
+        codusuario: codusuario,
+        codunidade: codunidade,
+        codperfil: codperfil,
+        codequipe: codequipe,
+        descnome: descnome,
+        desclogin: codusuario,
+        descemail: '$codusuario@test.com',
+        descsenha: 'hash',
+      ),
+      mode: InsertMode.insertOrReplace,
+    );
+  });
+}
 
 void main() {
   late ContatoRepository contatoRepository;
-  late MockDatabase mockDatabase;
-  late GetIt getIt;
+  late Database database;
 
-  setUp(() {
-    resetGetIt();
-    getIt = GetIt.instance;
-    mockDatabase = MockDatabase();
-
-    getIt.registerSingleton<Database>(mockDatabase);
-    contatoRepository = ContatoRepository();
+  setUp(() async {
+    database = _createTestDatabase();
+    await database.customStatement('PRAGMA foreign_keys = OFF');
+    contatoRepository = ContatoRepository(database: database);
   });
 
-  tearDown(() {
-    getIt.reset();
+  tearDown(() async {
+    await database.close();
   });
 
   group('ContatoRepository - getContatos', () {
     test('should return list of usuarios when query succeeds', () async {
-      // Arrange
-      final mockRow1 = MockQueryRow();
-      when(() => mockRow1.read<String>('codusuario')).thenReturn('0001');
-      when(() => mockRow1.read<String>('descnome')).thenReturn('User One');
+      await _insertTestUser(database, codusuario: '0001', descnome: 'User One');
+      await _insertTestUser(database, codusuario: '0002', descnome: 'User Two');
 
-      final mockRow2 = MockQueryRow();
-      when(() => mockRow2.read<String>('codusuario')).thenReturn('0002');
-      when(() => mockRow2.read<String>('descnome')).thenReturn('User Two');
-
-      final mockSelectable = MockSelectable<QueryRow>();
-      when(
-        () => mockSelectable.get(),
-      ).thenAnswer((_) async => [mockRow1, mockRow2]);
-
-      when(() => mockDatabase.customSelect(any())).thenReturn(mockSelectable);
-
-      // Act
       final result = await contatoRepository.getContatos();
 
-      // Assert
       expect(result, isNotNull);
       expect(result!.length, 2);
       expect(result[0].codusuario, '0001');
@@ -56,16 +90,8 @@ void main() {
     });
 
     test('should return empty list when no contatos exist', () async {
-      // Arrange
-      final mockSelectable = MockSelectable<QueryRow>();
-      when(() => mockSelectable.get()).thenAnswer((_) async => []);
-
-      when(() => mockDatabase.customSelect(any())).thenReturn(mockSelectable);
-
-      // Act
       final result = await contatoRepository.getContatos();
 
-      // Assert
       expect(result, isNotNull);
       expect(result!.length, 0);
     });
@@ -73,20 +99,14 @@ void main() {
 
   group('ContatoRepository - getStreamContatos', () {
     test('should return list of usuarios', () async {
-      // Arrange
-      final mockRow = MockQueryRow();
-      when(() => mockRow.read<String>('codusuario')).thenReturn('0001');
-      when(() => mockRow.read<String>('descnome')).thenReturn('Stream User');
+      await _insertTestUser(
+        database,
+        codusuario: '0001',
+        descnome: 'Stream User',
+      );
 
-      final mockSelectable = MockSelectable<QueryRow>();
-      when(() => mockSelectable.get()).thenAnswer((_) async => [mockRow]);
-
-      when(() => mockDatabase.customSelect(any())).thenReturn(mockSelectable);
-
-      // Act
       final result = await contatoRepository.getStreamContatos();
 
-      // Assert
       expect(result, isNotNull);
       expect(result!.length, 1);
       expect(result[0].descnome, 'Stream User');

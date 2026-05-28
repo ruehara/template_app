@@ -20,7 +20,12 @@ Future<void> loadServiceLocator() async {
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   getIt.registerLazySingleton<LanguageCubit>(() => LanguageCubit());
   getIt.registerSingleton<Database>(Database(DatabaseConnection(connect())));
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepository());
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepository(
+      database: getIt<Database>(),
+      prefs: getIt<AppSharedPreferences>(),
+    ),
+  );
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(getIt<AuthRepository>()),
   );

@@ -6,7 +6,7 @@ import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/user_bloc.dart';
 import '../blocs/user_events.dart';
 import '../blocs/user_states.dart';
-import '../model/user_model.dart';
+import '../repository/i_user_repository.dart';
 import '../repository/user_repository.dart';
 
 class UserPage extends StatelessWidget {
@@ -14,12 +14,12 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
+    return RepositoryProvider<IUserRepository>(
       create: (context) => UserRepository(),
       child: BlocProvider(
         create: (context) =>
-            UserBloc(RepositoryProvider.of<UserRepository>(context))
-              ..add(LoadUserEvent()),
+            UserBloc(RepositoryProvider.of<IUserRepository>(context))
+              ..add(const LoadUserEvent()),
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -27,12 +27,12 @@ class UserPage extends StatelessWidget {
           ),
           body: BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
-              if (state is UserLoadingState) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is UserLoadedState) {
-                final List<UserModel> userList = state.users;
-                return ListView.builder(
-                  itemCount: userList.length,
+              return switch (state) {
+                UserLoadingState() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                UserLoadedState(:final users) => ListView.builder(
+                  itemCount: users.length,
                   itemBuilder: (_, index) {
                     return Card(
                       elevation: 1.5,
@@ -40,28 +40,29 @@ class UserPage extends StatelessWidget {
                         mouseCursor: SystemMouseCursors.click,
                         onTap: () => context.pushNamed(
                           'userdetail',
-                          extra: userList[index],
+                          extra: users[index],
                         ),
                         dense: true,
                         visualDensity: VisualDensity.compact,
-                        title: Text(userList[index].name),
-                        subtitle: Text('${userList[index].age}'),
+                        title: Text(users[index].name),
+                        subtitle: Text('${users[index].age}'),
                         leading: Hero(
-                          tag: userList[index].id,
+                          tag: users[index].id,
                           child: CircleAvatar(
-                            key: Key(userList[index].id),
+                            key: Key(users[index].id),
                             backgroundImage: NetworkImage(
-                              userList[index].profilePicture,
+                              users[index].profilePicture,
                             ),
                           ),
                         ),
                       ),
                     );
                   },
-                );
-              } else {
-                return const Center(child: Text('Error Loading List'));
-              }
+                ),
+                UserErrorState() => Center(
+                  child: Text(context.l10n.errorLoadingList),
+                ),
+              };
             },
           ),
         ),

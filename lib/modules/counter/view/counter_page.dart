@@ -2,20 +2,24 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:template_app/core/app_config/injection.dart';
-import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
-import 'package:template_app/core/services/theme/cubit/theme_cubit.dart';
-import 'package:template_app/core/utils/exit_dialog.dart';
-import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
 import 'package:template_app/core/services/localization/l10n.dart';
+import 'package:template_app/core/utils/exit_dialog.dart';
+import 'package:template_app/modules/counter/blocs/counter_bloc.dart';
+import 'package:template_app/modules/counter/blocs/counter_events.dart';
+import 'package:template_app/modules/counter/blocs/counter_states.dart';
+import 'counter_fabs.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const CounterView();
+    return BlocProvider(
+      create: (_) => CounterBloc(),
+      child: const CounterView(),
+    );
   }
 }
 
@@ -85,78 +89,77 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
           actions: [
             IconButton(
               icon: const Icon(Icons.person),
-              tooltip: 'Perfil',
+              tooltip: l10n.profileLabel,
               onPressed: () => context.pushNamed('profile'),
             ),
           ],
         ),
-        body: Container(),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              elevation: 1.5,
-              heroTag: const Text('db2'),
-              mini: true,
-              onPressed: () => context.pushNamed('contato2'),
-              child: const Icon(Icons.accessibility_new),
-            ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              elevation: 1.5,
-              heroTag: const Text('teste'),
-              mini: true,
-              onPressed: () => context.pushNamed('userlist'),
-              child: const Icon(Icons.arrow_forward),
-            ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              elevation: 1.5,
-              heroTag: Text(l10n.reset),
-              tooltip: l10n.reset,
-              mini: true,
-              onPressed: () => getIt<AppSharedPreferences>().clearAll(),
-              child: const Icon(Icons.clear),
-            ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              elevation: 1.5,
-              heroTag: Text(l10n.language),
-              tooltip: l10n.language,
-              mini: true,
-              onPressed: () => context.language.updateAppLocale(),
-              child: const Icon(Icons.language),
-            ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              elevation: 1.5,
-              heroTag: Text(l10n.theme),
-              tooltip: l10n.theme,
-              mini: true,
-              onPressed: () => context.theme.updateAppTheme(),
-              child: const Icon(Icons.dark_mode),
-            ),
-            const SizedBox(height: 8),
-            // Test crash FAB: triggers an async exception to test reporting
-            FloatingActionButton(
-              elevation: 2.0,
-              heroTag: const Text('crash_test'),
-              tooltip: 'Trigger test exception',
-              backgroundColor: Colors.red,
-              onPressed: () {
-                // Throwing inside a microtask/asynchronous callback so runZonedGuarded captures it
-                Future.delayed(Duration.zero, () {
-                  throw Exception(
-                    'Teste: exceção acionada pelo FAB de teste (CounterPage)',
-                  );
-                });
-              },
-              child: const Icon(Icons.bug_report),
-            ),
-            const SizedBox(height: 8),
-          ],
+        body: BlocBuilder<CounterBloc, CounterState>(
+          builder: (context, state) {
+            final theme = Theme.of(context);
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    l10n.counterInfo,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    '${state.count}',
+                    style: theme.textTheme.displayLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FilledButton.tonal(
+                        onPressed: () => context
+                            .read<CounterBloc>()
+                            .add(const CounterDecremented()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.remove,
+                            semanticLabel: l10n.decrement,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      FilledButton(
+                        onPressed: () => context
+                            .read<CounterBloc>()
+                            .add(const CounterIncremented()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.add,
+                            semanticLabel: l10n.increment,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  TextButton.icon(
+                    onPressed: () => context
+                        .read<CounterBloc>()
+                        .add(const CounterReset()),
+                    icon: const Icon(Icons.refresh, size: 18),
+                    label: Text(l10n.reset),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
+        floatingActionButton: const CounterFabs(),
       ),
     );
   }

@@ -10,12 +10,14 @@ A feature-rich Flutter template with BLoC architecture, Drift database, flavors,
 ## Features ✨
 
 - 🏗️ **Feature-first architecture** with BLoC pattern
-- 💾 **Type-safe database** with Drift
+- � **Sealed class BLoC** — exhaustive `switch` expressions on states and events
+- 🧩 **Interface-driven repositories** — blocs depend on abstractions, not implementations
+- 💾 **Type-safe database** with Drift (type-safe query API)
 - 🌍 **Internationalization** (English, Portuguese)
 - 🎨 **Material 3** with dark/light themes
 - 🔐 **Authentication** with BCrypt encryption
 - 🚀 **Multiple flavors** (development, staging, production)
-- ✅ **Comprehensive testing** with mocks and coverage
+- ✅ **Comprehensive testing** with mocks and coverage (26 tests)
 - 🔄 **CI/CD** with GitHub Actions
 - 🪝 **Git hooks** for pre-commit quality checks
 
@@ -25,8 +27,8 @@ A feature-rich Flutter template with BLoC architecture, Drift database, flavors,
 
 ### Prerequisites
 
-- Flutter SDK 3.38.x or later
-- Dart SDK 3.10.8 or later
+- Flutter SDK 3.41.x or later
+- Dart SDK 3.11.x or later
 
 ### Installation
 
@@ -132,13 +134,13 @@ dart run build_runner build --delete-conflicting-outputs
 Run all unit and widget tests:
 
 ```sh
-# Basic test run
-flutter test
+# Basic test run (DB_SEED_ENABLED=false is required on Windows/desktop)
+flutter test --dart-define=DB_SEED_ENABLED=false
 
 # With coverage
-flutter test --coverage
+flutter test --coverage --dart-define=DB_SEED_ENABLED=false
 
-# With dart-defines (matches CI environment)
+# Full dart-defines (matches CI environment)
 flutter test --coverage \
   --dart-define=FLAVOR=test \
   --dart-define=API_KEY=test_key \
@@ -146,6 +148,8 @@ flutter test --coverage \
   --dart-define=LOG_ERROR_API_URL=http://test.example.com/log \
   --dart-define=DB_SEED_ENABLED=false
 ```
+
+> **Windows note:** Always pass `--dart-define=DB_SEED_ENABLED=false` when running tests. Without it, the Drift in-memory test database may conflict with the seed process.
 
 ### View Coverage Report
 
@@ -274,7 +278,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our development pr
 1. Install git hooks: `dart run lefthook install`
 2. Format code: `dart format .`
 3. Run analyzer: `flutter analyze`
-4. Run tests: `flutter test`
+4. Run tests: `flutter test --dart-define=DB_SEED_ENABLED=false`
 5. Create PR with conventional commits
 
 ---

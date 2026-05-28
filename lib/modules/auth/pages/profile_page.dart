@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_events.dart';
 import '../blocs/auth_states.dart';
@@ -11,25 +12,25 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocProvider.value(
       value: GetIt.instance<AuthBloc>()..add(const CheckAuthEvent()),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Perfil'), centerTitle: true),
+        appBar: AppBar(title: Text(l10n.profileLabel), centerTitle: true),
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is Unauthenticated) {
-              // Redirect to login page when user logs out
-              context.goNamed('login');
+            switch (state) {
+              case Unauthenticated():
+                context.goNamed('login');
+              default:
+                break;
             }
           },
           builder: (context, state) {
-            if (state is AuthLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-            if (state is Authenticated) {
-              final user = state.user;
-              return SingleChildScrollView(
+            final l10n = context.l10n;
+            return switch (state) {
+              AuthLoading() => const Center(child: CircularProgressIndicator()),
+              Authenticated(:final user) => SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Informações do Usuário',
+                              l10n.userInfoTitle,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const Divider(),
@@ -54,39 +55,39 @@ class ProfilePage extends StatelessWidget {
                             _buildInfoRow(
                               context,
                               Icons.person,
-                              'Nome',
+                              l10n.nameLabel,
                               user.descnome,
                             ),
                             const SizedBox(height: 12),
                             _buildInfoRow(
                               context,
                               Icons.account_circle,
-                              'Login',
+                              l10n.loginLabel,
                               user.desclogin,
                             ),
                             const SizedBox(height: 12),
                             _buildInfoRow(
                               context,
                               Icons.email,
-                              'Email',
+                              l10n.emailLabel,
                               user.descemail,
                             ),
                             const SizedBox(height: 12),
                             _buildInfoRow(
                               context,
                               Icons.business,
-                              'Unidade',
+                              l10n.unitLabel,
                               user.descunidade.isEmpty
-                                  ? 'Não definido'
+                                  ? l10n.notDefined
                                   : user.descunidade,
                             ),
                             const SizedBox(height: 12),
                             _buildInfoRow(
                               context,
                               Icons.badge,
-                              'Perfil',
+                              l10n.fieldRole,
                               user.descperfil.isEmpty
-                                  ? 'Não definido'
+                                  ? l10n.notDefined
                                   : user.descperfil,
                             ),
                           ],
@@ -99,7 +100,7 @@ class ProfilePage extends StatelessWidget {
                         context.pushNamed('edit-profile', extra: user);
                       },
                       icon: const Icon(Icons.edit),
-                      label: const Text('Editar Perfil'),
+                      label: Text(l10n.edit_profile),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
@@ -107,19 +108,16 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(height: 8),
                     OutlinedButton.icon(
                       onPressed: () {
-                        // Show confirmation dialog
                         showDialog(
                           context: context,
                           builder: (dialogContext) => AlertDialog(
-                            title: const Text('Sair'),
-                            content: const Text(
-                              'Deseja realmente sair do sistema?',
-                            ),
+                            title: Text(l10n.logoutButton),
+                            content: Text(l10n.logoutDialogContent),
                             actions: [
                               TextButton(
                                 onPressed: () =>
                                     Navigator.of(dialogContext).pop(),
-                                child: const Text('Cancelar'),
+                                child: Text(l10n.cancelButton),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -128,14 +126,14 @@ class ProfilePage extends StatelessWidget {
                                     const LogoutEvent(),
                                   );
                                 },
-                                child: const Text('Sair'),
+                                child: Text(l10n.logoutButton),
                               ),
                             ],
                           ),
                         );
                       },
                       icon: const Icon(Icons.logout),
-                      label: const Text('Sair'),
+                      label: Text(l10n.logoutButton),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         foregroundColor: Colors.red,
@@ -144,11 +142,8 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            }
-
-            if (state is AuthError) {
-              return Center(
+              ),
+              AuthError(:final message) => Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -158,20 +153,21 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.red,
                     ),
                     const SizedBox(height: 16),
-                    Text(state.message),
+                    Text(message),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         context.read<AuthBloc>().add(const CheckAuthEvent());
                       },
-                      child: const Text('Tentar Novamente'),
+                      child: Text(l10n.retryButton),
                     ),
                   ],
                 ),
-              );
-            }
-
-            return const Center(child: Text('Estado desconhecido'));
+              ),
+              AuthInitial() ||
+              Unauthenticated() ||
+              UserUpdated() => const SizedBox.shrink(),
+            };
           },
         ),
       ),

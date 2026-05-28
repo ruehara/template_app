@@ -1,3 +1,4 @@
+export 'app_routes.dart';
 export 'bootstrap.dart';
 export 'app.dart';
 export 'maintenance.dart';

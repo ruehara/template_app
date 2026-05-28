@@ -1,192 +1,135 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/app_config/app_routes.dart';
 import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
-import 'package:template_app/modules/auth/model/auth_user_model.dart';
-import 'package:template_app/modules/auth/pages/create_user_page.dart';
-import 'package:template_app/modules/auth/pages/edit_user_page.dart';
-import 'package:template_app/modules/auth/pages/login_page.dart';
-import 'package:template_app/modules/auth/pages/profile_page.dart';
-import 'package:template_app/modules/contato/pages/contato_page.dart';
-import 'package:template_app/modules/contato/pages/contato_page2.dart';
-import 'package:template_app/modules/counter/view/counter_page.dart';
-import 'package:template_app/modules/user/model/user_model.dart';
-import 'package:template_app/modules/user/pages/user_page.dart';
-import 'package:template_app/modules/user/pages/user_page_detail.dart';
+import 'package:template_app/modules/auth/auth.dart';
+import 'package:template_app/modules/biometric/biometric.dart';
+import 'package:template_app/modules/charts/charts.dart';
+import 'package:template_app/modules/contato/contato.dart';
+import 'package:template_app/modules/counter/counter.dart';
+import 'package:template_app/modules/home/home.dart';
+import 'package:template_app/modules/lotties/lotties.dart';
+import 'package:template_app/modules/network/network.dart';
+import 'package:template_app/modules/qrcode/qrcode.dart';
+import 'package:template_app/modules/sensors/sensors.dart';
+import 'package:template_app/modules/user/user.dart';
+
+CustomTransitionPage<void> _fadePage(
+  GoRouterState state,
+  Widget child, {
+  Curve curve = Curves.easeInOut,
+  Duration duration = const Duration(milliseconds: 300),
+}) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: duration,
+    transitionsBuilder: (_, animation, _, child) => FadeTransition(
+      opacity: CurveTween(curve: curve).animate(animation),
+      child: child,
+    ),
+  );
+}
 
 final GoRouter router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: AppRoutes.login,
   redirect: (context, state) {
     final isAuthenticated = GetIt.instance<AppSharedPreferences>()
         .isAuthenticated();
-    final currentPath = state.uri.path;
-    final isLoginRoute = currentPath == '/login';
-    final isRegisterRoute = currentPath == '/register';
+    final path = state.uri.path;
+    final isAuthRoute = path == AppRoutes.login || path == AppRoutes.register;
 
-    // If not authenticated and not on login/register page, redirect to login
-    if (!isAuthenticated && !isLoginRoute && !isRegisterRoute) {
-      return '/login';
-    }
-
-    // If authenticated and on login/register page, redirect to counter
-    if (isAuthenticated && (isLoginRoute || isRegisterRoute)) {
-      return '/counter';
-    }
-
-    // No redirect needed
+    if (!isAuthenticated && !isAuthRoute) return AppRoutes.login;
+    if (isAuthenticated && isAuthRoute) return AppRoutes.home;
     return null;
   },
   routes: <RouteBase>[
     GoRoute(
-      path: '/login',
-      name: 'login',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const LoginPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.login,
+      name: AppRoutes.loginName,
+      pageBuilder: (_, state) => _fadePage(state, const LoginPage()),
     ),
     GoRoute(
-      path: '/register',
-      name: 'register',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const CreateUserPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
-    ),
-
-    GoRoute(
-      path: '/counter',
-      name: 'counter',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const CounterPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.register,
+      name: AppRoutes.registerName,
+      pageBuilder: (_, state) => _fadePage(state, const CreateUserPage()),
     ),
     GoRoute(
-      path: '/profile',
-      name: 'profile',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const ProfilePage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.home,
+      name: AppRoutes.homeName,
+      pageBuilder: (_, state) => _fadePage(state, const HomePage()),
     ),
     GoRoute(
-      path: '/edit-profile',
-      name: 'edit-profile',
-      pageBuilder: (context, state) {
-        final user = state.extra as AuthUserModel;
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: EditUserPage(user: user),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.counter,
+      name: AppRoutes.counterName,
+      pageBuilder: (_, state) => _fadePage(state, const CounterPage()),
     ),
     GoRoute(
-      path: '/userlist',
-      name: 'userlist',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const UserPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.profile,
+      name: AppRoutes.profileName,
+      pageBuilder: (_, state) => _fadePage(state, const ProfilePage()),
     ),
     GoRoute(
-      path: '/userdetail',
-      name: 'userdetail',
-      pageBuilder: (context, state) {
-        final UserModel sample = state.extra as UserModel;
-        return CustomTransitionPage(
-          transitionDuration: const Duration(milliseconds: 400),
-          key: state.pageKey,
-          child: UserDetail(object: sample),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(
-                curve: Curves.linearToEaseOut,
-              ).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.editProfile,
+      name: AppRoutes.editProfileName,
+      pageBuilder: (_, state) =>
+          _fadePage(state, EditUserPage(user: state.extra as AuthUserModel)),
     ),
     GoRoute(
-      path: '/contato',
-      name: 'contato',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const ContatoPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.userList,
+      name: AppRoutes.userListName,
+      pageBuilder: (_, state) => _fadePage(state, const UserPage()),
     ),
     GoRoute(
-      path: '/contato2',
-      name: 'contato2',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const ContatoPage2(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
+      path: AppRoutes.userDetail,
+      name: AppRoutes.userDetailName,
+      pageBuilder: (_, state) => _fadePage(
+        state,
+        UserDetail(object: state.extra as UserModel),
+        curve: Curves.linearToEaseOut,
+        duration: const Duration(milliseconds: 400),
+      ),
+    ),
+    GoRoute(
+      path: AppRoutes.contato,
+      name: AppRoutes.contatoName,
+      pageBuilder: (_, state) => _fadePage(state, const ContatoPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.contato2,
+      name: AppRoutes.contato2Name,
+      pageBuilder: (_, state) => _fadePage(state, const ContatoPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.network,
+      name: AppRoutes.networkName,
+      pageBuilder: (_, state) => _fadePage(state, const NetworkPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.biometric,
+      name: AppRoutes.biometricName,
+      pageBuilder: (_, state) => _fadePage(state, const BiometricPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.sensors,
+      name: AppRoutes.sensorsName,
+      pageBuilder: (_, state) => _fadePage(state, const SensorsPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.qrCode,
+      name: AppRoutes.qrCodeName,
+      pageBuilder: (_, state) => _fadePage(state, const QrCodePage()),
+    ),
+    GoRoute(
+      path: AppRoutes.charts,
+      name: AppRoutes.chartsName,
+      pageBuilder: (_, state) => _fadePage(state, const ChartsPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.lotties,
+      name: AppRoutes.lottiesName,
+      pageBuilder: (_, state) => _fadePage(state, const LottiesPage()),
     ),
   ],
 );

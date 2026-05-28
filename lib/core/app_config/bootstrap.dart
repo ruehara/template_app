@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:template_app/core/app_config/_app_config.dart';
 import 'package:template_app/core/services/logger/logger_service.dart';
+import 'package:template_app/core/utils/constants.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -63,6 +64,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         DeviceOrientation.portraitDown,
       ]);
 
+      await initAppPath();
       await loadServiceLocator();
       await Maintenance.run();
 

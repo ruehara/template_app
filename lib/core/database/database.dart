@@ -1,7 +1,6 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:template_app/core/app_config/_app_config.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
 import 'tables/schema.drift.dart';
@@ -25,7 +24,7 @@ class Database extends $Database {
           switch (step) {
             // case 2:
             //   // column was added in version 2.
-            //   await m.addColumn(teste, teste.teste2);
+            //   await m.addColumn(tafusuario, tafusuario.vlsaldo);
             //   break;
             // case 3:
             //   // column was added in version 3.
@@ -48,10 +47,10 @@ class Database extends $Database {
         if (details.wasCreated &&
             const String.fromEnvironment(
                   'DB_SEED_ENABLED',
-                  defaultValue: 'true',
+                  defaultValue: 'false',
                 ) ==
                 'true') {
-          await getIt<SharedPreferences>().clear();
+          await (await SharedPreferences.getInstance()).clear();
           await batch((b) {
             b.insert(
               tafperfil,
@@ -83,10 +82,25 @@ class Database extends $Database {
                 codunidade: '01',
                 codperfil: '01',
                 codequipe: '01',
-                descnome: 'Rodrigo Uehara',
-                desclogin: 'rodrigo',
-                descsenha: BCrypt.hashpw('123456', BCrypt.gensalt()),
-                descemail: 'rodrigo@email.com',
+                descnome: const String.fromEnvironment(
+                  'SEED_USER_NAME',
+                  defaultValue: 'Admin',
+                ),
+                desclogin: const String.fromEnvironment(
+                  'SEED_USER_LOGIN',
+                  defaultValue: 'admin',
+                ),
+                descsenha: BCrypt.hashpw(
+                  const String.fromEnvironment(
+                    'SEED_USER_PASSWORD',
+                    defaultValue: 'changeme',
+                  ),
+                  BCrypt.gensalt(),
+                ),
+                descemail: const String.fromEnvironment(
+                  'SEED_USER_EMAIL',
+                  defaultValue: 'admin@example.com',
+                ),
               ),
             );
           });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_events.dart';
 import '../blocs/auth_states.dart';
@@ -48,26 +49,28 @@ class _CreateUserPageState extends State<CreateUserPage> {
     return BlocProvider.value(
       value: GetIt.instance<AuthBloc>(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Criar Usuário')),
+        appBar: AppBar(title: Text(context.l10n.createUserTitle)),
         body: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24.0),
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
-                if (state is Authenticated) {
-                  // Navigate to counter page on successful registration/login
-                  // Assuming 'counter' is the home route name as used in LoginPage
-                  context.goNamed('counter');
-                } else if (state is AuthError) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
+                switch (state) {
+                  case Authenticated():
+                    context.goNamed('counter');
+                  case AuthError(:final message):
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  default:
+                    break;
                 }
               },
               builder: (context, state) {
+                final l10n = context.l10n;
                 final isLoading = state is AuthLoading;
 
                 return Card(
@@ -83,22 +86,22 @@ class _CreateUserPageState extends State<CreateUserPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              'Novo Usuário',
+                              l10n.newUserTitle,
                               style: Theme.of(context).textTheme.headlineMedium,
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 32),
                             TextFormField(
                               controller: _nameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Nome',
-                                prefixIcon: Icon(Icons.person),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.nameLabel,
+                                prefixIcon: const Icon(Icons.person),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o nome';
+                                  return l10n.nameRequired;
                                 }
                                 return null;
                               },
@@ -106,15 +109,15 @@ class _CreateUserPageState extends State<CreateUserPage> {
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _loginController,
-                              decoration: const InputDecoration(
-                                labelText: 'Login',
-                                prefixIcon: Icon(Icons.account_circle),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.loginLabel,
+                                prefixIcon: const Icon(Icons.account_circle),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o login';
+                                  return l10n.loginRequired;
                                 }
                                 return null;
                               },
@@ -122,15 +125,15 @@ class _CreateUserPageState extends State<CreateUserPage> {
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _emailController,
-                              decoration: const InputDecoration(
-                                labelText: 'Email',
-                                prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.emailLabel,
+                                prefixIcon: const Icon(Icons.email),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o email';
+                                  return l10n.emailRequired;
                                 }
                                 return null;
                               },
@@ -139,7 +142,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                             TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                labelText: 'Senha',
+                                labelText: l10n.passwordLabel,
                                 prefixIcon: const Icon(Icons.lock),
                                 border: const OutlineInputBorder(),
                                 suffixIcon: IconButton(
@@ -159,7 +162,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Por favor, informe a senha';
+                                  return l10n.passwordRequired;
                                 }
                                 return null;
                               },
@@ -182,9 +185,9 @@ class _CreateUserPageState extends State<CreateUserPage> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : const Text(
-                                      'Criar Conta',
-                                      style: TextStyle(fontSize: 16),
+                                  : Text(
+                                      l10n.createAccountAction,
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                             ),
                           ],

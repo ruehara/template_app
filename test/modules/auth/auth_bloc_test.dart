@@ -5,9 +5,9 @@ import 'package:template_app/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app/modules/auth/blocs/auth_events.dart';
 import 'package:template_app/modules/auth/blocs/auth_states.dart';
 import 'package:template_app/modules/auth/model/auth_user_model.dart';
-import 'package:template_app/modules/auth/repository/auth_repository.dart';
+import 'package:template_app/modules/auth/repository/i_auth_repository.dart';
 
-class MockAuthRepository extends Mock implements AuthRepository {}
+class MockAuthRepository extends Mock implements IAuthRepository {}
 
 void main() {
   late AuthBloc authBloc;
@@ -192,6 +192,60 @@ void main() {
           email: 'newuser@email.com',
           password: 'password123',
         ),
+      ),
+      expect: () => [const AuthLoading(), isA<AuthError>()],
+    );
+  });
+
+  group('AuthBloc - UpdateUserEvent', () {
+    const testUser = AuthUserModel(
+      codusuario: '0001',
+      descnome: 'Updated User',
+      desclogin: 'updateduser',
+      descemail: 'updated@email.com',
+      descunidade: 'Unit 01',
+      descperfil: 'Admin',
+    );
+
+    blocTest<AuthBloc, AuthState>(
+      'emits [AuthLoading, UserUpdated, Authenticated] when update succeeds',
+      build: () {
+        when(
+          () => mockAuthRepository.updateUser(
+            'Updated User',
+            'updateduser',
+            'newpass',
+          ),
+        ).thenAnswer((_) async {});
+        when(
+          () => mockAuthRepository.getCurrentUser(),
+        ).thenAnswer((_) async => testUser);
+        return authBloc;
+      },
+      act: (bloc) => bloc.add(
+        const UpdateUserEvent(
+          nome: 'Updated User',
+          login: 'updateduser',
+          senha: 'newpass',
+        ),
+      ),
+      expect: () => [
+        const AuthLoading(),
+        const UserUpdated(),
+        const Authenticated(testUser),
+      ],
+    );
+
+    blocTest<AuthBloc, AuthState>(
+      'emits [AuthLoading, AuthError] when update fails',
+      build: () {
+        when(
+          () => mockAuthRepository.updateUser(any(), any(), any()),
+        ).thenThrow(Exception('Update failed'));
+        return authBloc;
+      },
+      act: (bloc) => bloc.add(
+        const UpdateUserEvent(nome: 'Name', login: 'login', senha: null),
       ),
       expect: () => [const AuthLoading(), isA<AuthError>()],
     );

@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../repository/auth_repository.dart';
+import '../repository/i_auth_repository.dart';
 import 'auth_events.dart';
 import 'auth_states.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   AuthBloc(this._authRepository) : super(const AuthInitial()) {
     on<LoginEvent>(_onLogin);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template_app/core/database/tables/schema.drift.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template_app/core/database/database.dart';
 import 'package:template_app/core/services/localization/l10n.dart';
-import '../blocs/contato_bloc.dart';
-import '../blocs/contato_events.dart';
-import '../blocs/contato_state.dart';
 import '../contato.dart';
 
 class ContatoPage extends StatelessWidget {
@@ -12,12 +10,13 @@ class ContatoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => ContatoRepository(),
+    return RepositoryProvider<IContatoRepository>(
+      create: (context) =>
+          ContatoRepository(database: GetIt.instance<Database>()),
       child: BlocProvider(
         create: (context) =>
-            ContatoBloc(RepositoryProvider.of<ContatoRepository>(context))
-              ..add(LoadContatoEvent()),
+            ContatoBloc(RepositoryProvider.of<IContatoRepository>(context))
+              ..add(const LoadContatoEvent()),
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -25,28 +24,28 @@ class ContatoPage extends StatelessWidget {
           ),
           body: BlocBuilder<ContatoBloc, ContatoState>(
             builder: (context, state) {
-              if (state is ContatoLoadingState) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is ContatoLoadedState) {
-                final List<Usuario>? userList =
-                    state.contatos; //state.contatos;
-                return ListView.builder(
-                  itemCount: userList?.length, //userList
+              return switch (state) {
+                ContatoLoadingState() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                ContatoLoadedState(:final contatos) => ListView.builder(
+                  itemCount: contatos?.length,
                   itemBuilder: (_, index) {
                     return Card(
-                      elevation: 4,
+                      elevation: 1.5,
                       child: ListTile(
                         mouseCursor: SystemMouseCursors.click,
                         dense: true,
                         visualDensity: VisualDensity.compact,
-                        title: Text('${userList?[index].descnome}'),
+                        title: Text('${contatos?[index].descnome}'),
                       ),
                     );
                   },
-                );
-              } else {
-                return const Center(child: Text('Error Loading List'));
-              }
+                ),
+                ContatoErrorState() => Center(
+                  child: Text(context.l10n.errorLoadingList),
+                ),
+              };
             },
           ),
           floatingActionButton: FloatingActionButton.small(

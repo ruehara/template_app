@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:template_app/core/database/database.dart';
 import 'package:template_app/core/database/tables/schema.drift.dart';
 import 'package:template_app/core/services/localization/l10n.dart';
-import '../blocs/contato_bloc.dart';
-import '../blocs/contato_events.dart';
-import '../blocs/contato_state.dart';
 import '../contato.dart';
 
 class ContatoPage2 extends StatelessWidget {
@@ -12,12 +11,13 @@ class ContatoPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => ContatoRepository(),
+    return RepositoryProvider<IContatoRepository>(
+      create: (context) =>
+          ContatoRepository(database: GetIt.instance<Database>()),
       child: BlocProvider(
         create: (context) =>
-            ContatoBloc(RepositoryProvider.of<ContatoRepository>(context))
-              ..add(LoadContatoEvent()),
+            ContatoBloc(RepositoryProvider.of<IContatoRepository>(context))
+              ..add(const LoadContatoEvent()),
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -34,7 +34,7 @@ class ContatoPage2 extends StatelessWidget {
                   itemCount: userList?.length, //userList
                   itemBuilder: (_, index) {
                     return Card(
-                      elevation: 4,
+                      elevation: 1.5,
                       child: ListTile(
                         mouseCursor: SystemMouseCursors.click,
                         dense: true,
@@ -45,7 +45,7 @@ class ContatoPage2 extends StatelessWidget {
                   },
                 );
               } else {
-                return const Center(child: Text('Error Loading List'));
+                return Center(child: Text(context.l10n.errorLoadingList));
               }
             },
           ),
