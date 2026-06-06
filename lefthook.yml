@@ -1,0 +1,44 @@
+# Lefthook Git Hooks Configuration
+# Install: dart run lefthook install
+# See: https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.dart"
+      run: dart format {staged_files} && git add {staged_files}
+      
+    analyze:
+      run: flutter analyze --no-fatal-infos
+      
+    # Uncomment to run codegen check on commit (slower)
+    # codegen-check:
+    #   run: |
+    #     flutter gen-l10n
+    #     dart run build_runner build --delete-conflicting-outputs
+
+pre-push:
+  commands:
+    test:
+      run: |
+        flutter test \
+          --dart-define=FLAVOR=test \
+          --dart-define=API_KEY=test_key \
+          --dart-define=BASE_URL=http://test.example.com \
+          --dart-define=LOG_ERROR_API_URL=http://test.example.com/log \
+          --dart-define=DB_SEED_ENABLED=false
+
+# Optional: commit-msg hook for conventional commits
+# commit-msg:
+#   commands:
+#     conventional-commit:
+#       run: |
+#         commit_msg=$(cat {1})
+#         if ! echo "$commit_msg" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+'; then
+#           echo "Error: Commit message must follow Conventional Commits format"
+#           echo "Example: feat(auth): add login functionality"
+#           exit 1
+#         fi
+
+# Skip hooks when needed with: LEFTHOOK=0 git commit

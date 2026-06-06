@@ -21,7 +21,7 @@ class Maintenance {
 
   /// Create the folders
   static Future<void> createFolders() async {
-    var appDirectory = appPath;
+    final appDirectory = appPath;
     await Directory(p.join(appDirectory, filesDir)).create(recursive: true);
     await Directory(p.join(appDirectory, mediaDir)).create(recursive: true);
     await Directory(p.join(appDirectory, logDir)).create(recursive: true);

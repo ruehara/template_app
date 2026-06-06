@@ -1,12 +1,14 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 
-@immutable
-abstract class ContatoEvent extends Equatable {
+sealed class ContatoEvent extends Equatable {
   const ContatoEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
-class LoadContatoEvent extends ContatoEvent {
+final class LoadContatoEvent extends ContatoEvent {
+  const LoadContatoEvent();
   @override
   List<Object?> get props => [];
 }

@@ -5,45 +5,48 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "DEV",
+      "name": "Development",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
-        "--target",
-        "lib/main.dart",
-        "--dart-define-from-file",
-        "C:\\Config\\config_dev.json"
+        "--dart-define=FLAVOR=development",
+        "--dart-define=API_KEY=dev_key_12345",
+        "--dart-define=BASE_URL=https://dev.api.example.com",
+        "--dart-define=LOG_ERROR_API_URL=https://dev.api.example.com/log",
+        "--dart-define=DB_SEED_ENABLED=true"
       ]
     },
     {
-      "name": "QA",
+      "name": "Staging",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "args": [
         "--flavor",
         "staging",
-        "--target",
-        "lib/main.dart",
-        "--dart-define-from-file",
-        "C:\\Config\\config_qa.json"
+        "--dart-define=FLAVOR=staging",
+        "--dart-define=API_KEY=staging_key_67890",
+        "--dart-define=BASE_URL=https://staging.api.example.com",
+        "--dart-define=LOG_ERROR_API_URL=https://staging.api.example.com/log",
+        "--dart-define=DB_SEED_ENABLED=false"
       ]
     },
     {
-      "name": "PROD",
+      "name": "Production",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "args": [
         "--flavor",
         "production",
-        "--target",
-        "lib/main.dart",
-        "--dart-define-from-file",
-        "C:\\Config\\config_prod.json"
+        "--dart-define=FLAVOR=production",
+        "--dart-define=API_KEY=REPLACE_WITH_REAL_PROD_KEY",
+        "--dart-define=BASE_URL=https://api.example.com",
+        "--dart-define=LOG_ERROR_API_URL=https://api.example.com/log",
+        "--dart-define=DB_SEED_ENABLED=false"
       ]
     }
   ]
