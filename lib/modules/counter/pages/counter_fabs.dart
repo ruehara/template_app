@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/app_config/app_routes.dart';
 import 'package:template_app/core/app_config/injection.dart';
 import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
 import 'package:template_app/core/services/localization/l10n.dart';
@@ -20,7 +21,7 @@ class CounterFabs extends StatelessWidget {
           elevation: 1.5,
           heroTag: const Text('db2'),
           mini: true,
-          onPressed: () => context.pushNamed('contato2'),
+          onPressed: () => context.pushNamed(AppRoutes.contatoName),
           child: const Icon(Icons.accessibility_new),
         ),
         const SizedBox(height: 8),
@@ -28,7 +29,7 @@ class CounterFabs extends StatelessWidget {
           elevation: 1.5,
           heroTag: const Text('teste'),
           mini: true,
-          onPressed: () => context.pushNamed('userlist'),
+          onPressed: () => context.pushNamed(AppRoutes.userListName),
           child: const Icon(Icons.arrow_forward),
         ),
         const SizedBox(height: 8),

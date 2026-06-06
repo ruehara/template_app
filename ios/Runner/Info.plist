@@ -52,5 +52,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to demonstrate the camera feature.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app reads photos from your library to demonstrate the camera feature.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app uses Bluetooth to demonstrate BLE device scanning.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location to demonstrate the geolocation feature.</string>
 </dict>
 </plist>

@@ -6,6 +6,7 @@ import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_events.dart';
 import '../blocs/auth_states.dart';
+import '../repository/i_auth_repository.dart';
 
 class CreateUserPage extends StatefulWidget {
   const CreateUserPage({super.key});
@@ -46,8 +47,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: GetIt.instance<AuthBloc>(),
+    return BlocProvider(
+      create: (_) => AuthBloc(GetIt.instance<IAuthRepository>()),
       child: Scaffold(
         appBar: AppBar(title: Text(context.l10n.createUserTitle)),
         body: Center(
@@ -58,10 +59,10 @@ class _CreateUserPageState extends State<CreateUserPage> {
                 switch (state) {
                   case Authenticated():
                     context.goNamed('counter');
-                  case AuthError(:final message):
+                  case AuthError(:final code):
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(message),
+                        content: Text(context.l10n.messageFor(code)),
                         backgroundColor: Colors.red,
                       ),
                     );

@@ -7,8 +7,8 @@ import 'package:template_app/core/services/theme/_theme.dart';
 import 'package:template_app/core/database/connection/connection.dart';
 import 'package:template_app/core/database/database.dart';
 import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
-import 'package:template_app/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app/modules/auth/repository/auth_repository.dart';
+import 'package:template_app/modules/auth/repository/i_auth_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -20,13 +20,10 @@ Future<void> loadServiceLocator() async {
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   getIt.registerLazySingleton<LanguageCubit>(() => LanguageCubit());
   getIt.registerSingleton<Database>(Database(DatabaseConnection(connect())));
-  getIt.registerLazySingleton<AuthRepository>(
+  getIt.registerLazySingleton<IAuthRepository>(
     () => AuthRepository(
       database: getIt<Database>(),
       prefs: getIt<AppSharedPreferences>(),
     ),
-  );
-  getIt.registerLazySingleton<AuthBloc>(
-    () => AuthBloc(getIt<AuthRepository>()),
   );
 }

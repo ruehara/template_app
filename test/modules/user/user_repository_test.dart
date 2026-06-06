@@ -56,9 +56,9 @@ void main() {
         () => userRepository.getUsers(),
         throwsA(
           isA<NetworkException>().having(
-            (e) => e.message,
-            'message',
-            contains('Not Found'),
+            (e) => e.code,
+            'code',
+            AppErrorCode.network,
           ),
         ),
       );

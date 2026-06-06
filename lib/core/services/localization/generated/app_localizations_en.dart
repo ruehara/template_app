@@ -57,6 +57,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorLoadingList => 'Error loading list';
 
   @override
+  String get errorInvalidCredentials => 'Invalid username or password';
+
+  @override
+  String get errorNotAuthenticated => 'You are not signed in';
+
+  @override
+  String get errorUserNotFound => 'User not found';
+
+  @override
+  String get errorUserAlreadyExists => 'This user already exists';
+
+  @override
+  String get errorNoUnit => 'No unit found. Contact the administrator.';
+
+  @override
+  String get errorNoProfile => 'No profile found. Contact the administrator.';
+
+  @override
+  String get errorNoTeam => 'No team found. Contact the administrator.';
+
+  @override
+  String get errorDatabase => 'A database error occurred. Please try again.';
+
+  @override
+  String get errorNetwork => 'A network error occurred. Please try again.';
+
+  @override
+  String get errorUnexpected => 'An unexpected error occurred. Please try again.';
+
+  @override
   String get notDefined => 'Not defined';
 
   @override
@@ -262,6 +292,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureCounterSubtitle => 'Simple BLoC example';
+
+  @override
+  String get featureHtmlTitle => 'HTML Viewer';
+
+  @override
+  String get featureHtmlSubtitle => 'Render HTML with papyrus';
 
   @override
   String get networkTitle => 'Connectivity';
@@ -472,4 +508,170 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get testCrashTooltip => 'Trigger test exception';
+
+  @override
+  String get featureFileShareTitle => 'File Share';
+
+  @override
+  String get featureFileShareSubtitle => 'Share text and files';
+
+  @override
+  String get featurePrinterTitle => 'Printer';
+
+  @override
+  String get featurePrinterSubtitle => 'Print documents';
+
+  @override
+  String get cameraTitle => 'Camera';
+
+  @override
+  String get cameraTakePhoto => 'Take Photo';
+
+  @override
+  String get cameraPickGallery => 'Pick from Gallery';
+
+  @override
+  String get cameraNoImage => 'No image selected';
+
+  @override
+  String get cameraNotSupported => 'Camera is not supported on this platform.';
+
+  @override
+  String get cameraErrorPicking => 'Failed to pick or capture image.';
+
+  @override
+  String get bluetoothTitle => 'Bluetooth (BLE)';
+
+  @override
+  String get bluetoothScan => 'Scan';
+
+  @override
+  String get bluetoothStop => 'Stop';
+
+  @override
+  String get bluetoothScanning => 'Scanning...';
+
+  @override
+  String get bluetoothNoDevices => 'No devices found';
+
+  @override
+  String get bluetoothDevicesFound => 'devices found';
+
+  @override
+  String get bluetoothNotSupported => 'Bluetooth is not supported on this platform.';
+
+  @override
+  String get bluetoothAdapterOff => 'Bluetooth is off. Enable it and try again.';
+
+  @override
+  String get bluetoothDeviceUnknown => 'Unknown device';
+
+  @override
+  String get bluetoothPairedDevices => 'Paired Devices';
+
+  @override
+  String get bluetoothNearbyDevices => 'Nearby Devices';
+
+  @override
+  String get bluetoothConnected => 'Connected';
+
+  @override
+  String get geolocationTitle => 'Geolocation';
+
+  @override
+  String get geolocationGetPosition => 'Get My Location';
+
+  @override
+  String get geolocationLatitude => 'Latitude';
+
+  @override
+  String get geolocationLongitude => 'Longitude';
+
+  @override
+  String get geolocationAltitude => 'Altitude';
+
+  @override
+  String get geolocationAccuracy => 'Accuracy';
+
+  @override
+  String get geolocationSpeed => 'Speed';
+
+  @override
+  String get geolocationWaiting => 'Tap the button to get your location.';
+
+  @override
+  String get geolocationLoading => 'Getting location...';
+
+  @override
+  String geolocationError(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String get geolocationPermissionDenied => 'Location permission denied. Please enable it in settings.';
+
+  @override
+  String get geolocationPermissionDeniedForever => 'Location permission permanently denied. Open app settings to enable it.';
+
+  @override
+  String get geolocationServiceDisabled => 'Location services are disabled. Please enable GPS and try again.';
+
+  @override
+  String get pdfTitle => 'PDF';
+
+  @override
+  String get pdfPreview => 'Preview / Print';
+
+  @override
+  String get pdfInfo => 'Tap to generate a sample PDF and open the print and share preview.';
+
+  @override
+  String get fileShareTitle => 'File Share';
+
+  @override
+  String get fileShareLabel => 'Content to share';
+
+  @override
+  String get fileShareHint => 'Type something to share...';
+
+  @override
+  String get fileShareShareButton => 'Share';
+
+  @override
+  String get fileShareEmptyError => 'Please enter something to share.';
+
+  @override
+  String get printerTitle => 'Printer';
+
+  @override
+  String get printerPrint => 'Print';
+
+  @override
+  String get printerPreview => 'Preview';
+
+  @override
+  String get printerListLabel => 'Available Printers';
+
+  @override
+  String get printerNoDevices => 'No printers found on this device.';
+
+  @override
+  String get printerPrinting => 'Sending to printer...';
+
+  @override
+  String get printerSuccess => 'Document sent to printer!';
+
+  @override
+  String printerError(String message) {
+    return 'Print error: $message';
+  }
+
+  @override
+  String get htmlTitle => 'HTML Viewer';
+
+  @override
+  String get htmlSampleHeading => 'Hello from Papyrus!';
+
+  @override
+  String get htmlSampleParagraph => 'This page is raw HTML rendered inside a secure, policy-driven WebView.';
 }

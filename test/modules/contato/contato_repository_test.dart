@@ -81,8 +81,7 @@ void main() {
 
       final result = await contatoRepository.getContatos();
 
-      expect(result, isNotNull);
-      expect(result!.length, 2);
+      expect(result.length, 2);
       expect(result[0].codusuario, '0001');
       expect(result[0].descnome, 'User One');
       expect(result[1].codusuario, '0002');
@@ -92,24 +91,7 @@ void main() {
     test('should return empty list when no contatos exist', () async {
       final result = await contatoRepository.getContatos();
 
-      expect(result, isNotNull);
-      expect(result!.length, 0);
-    });
-  });
-
-  group('ContatoRepository - getStreamContatos', () {
-    test('should return list of usuarios', () async {
-      await _insertTestUser(
-        database,
-        codusuario: '0001',
-        descnome: 'Stream User',
-      );
-
-      final result = await contatoRepository.getStreamContatos();
-
-      expect(result, isNotNull);
-      expect(result!.length, 1);
-      expect(result[0].descnome, 'Stream User');
+      expect(result.length, 0);
     });
   });
 }

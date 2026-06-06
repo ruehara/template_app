@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:template_app/core/utils/exceptions.dart';
 import 'package:template_app/modules/auth/blocs/auth_bloc.dart';
 import 'package:template_app/modules/auth/blocs/auth_events.dart';
 import 'package:template_app/modules/auth/blocs/auth_states.dart';
@@ -65,9 +66,9 @@ void main() {
       expect: () => [
         const AuthLoading(),
         isA<AuthError>().having(
-          (state) => state.message,
-          'message',
-          contains('Invalid credentials'),
+          (state) => state.code,
+          'code',
+          AppErrorCode.unknown,
         ),
       ],
     );

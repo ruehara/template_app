@@ -1,6 +1,6 @@
 # Standardization Implementation Summary
 
-**Phase 1 Date:** February 8, 2026 — **Phase 2 Date:** May 18, 2026  
+**Phase 1 Date:** February 8, 2026 — **Phase 2 Date:** May 18, 2026 — **Phase 3 Date:** June 6, 2026  
 **Status:** ✅ Complete
 
 ## Overview
@@ -164,7 +164,7 @@ Successfully implemented comprehensive standardization and CI/CD infrastructure 
 - ✅ Eliminated string-based table/column references; full compile-time safety
 
 ### 7. Widget Decomposition
-- ✅ Extracted `CounterFabs` widget from `CounterPage` into `lib/modules/counter/view/counter_fabs.dart`
+- ✅ Extracted `CounterFabs` widget from `CounterPage` into `lib/modules/counter/pages/counter_fabs.dart`
 - ✅ Deleted stale `lib/modules/contato/pages/contato_page2.dart`
 
 ### 8. Seed Credentials Security
@@ -189,20 +189,73 @@ Successfully implemented comprehensive standardization and CI/CD infrastructure 
 
 ---
 
+## ✅ Phase 3 — Feature Showcase Expansion (June 2026)
+
+### 1. Thirteen New Feature Modules
+Each module follows the standard architecture (barrel file + `pages/` dir) and is wired into the router and home showcase grid:
+
+| Module | Package | Category |
+|--------|---------|----------|
+| `network` | `connectivity_plus` | Network |
+| `biometric` | `local_auth` | Hardware |
+| `sensors` | `sensors_plus` | Hardware |
+| `qrcode` | `mobile_scanner` | Hardware |
+| `camera` | `image_picker` | Hardware |
+| `bluetooth` | `flutter_blue_plus` | Hardware |
+| `geolocation` | `geolocator` | Hardware |
+| `pdf` | `pdf` + `printing` | Media |
+| `file_share` | `share_plus` | Media |
+| `printer` | `printing` | Media |
+| `html` | `papyrus` | Media |
+| `charts` | `fl_chart` | UI |
+| `lotties` | `lottie` | UI |
+
+### 2. Home Page Refactor
+- ✅ Replaced flat feature list with `FeatureGrid` widget — categories (Data, Network, Hardware, Media, UI) rendered as labelled grid sections
+- ✅ Introduced `FeatureItem` model (`lib/modules/home/model/feature_item.dart`) with `available` flag for coming-soon cards
+- ✅ Audio feature marked as "Coming soon" placeholder
+
+### 3. Exception Layer Consolidation
+- ✅ Replaced sealed exception subclasses with `AppErrorCode` enum + single `sealed class AppException` hierarchy — cleaner error propagation
+- ✅ Added `errorCodeOf(Object)` top-level helper for unknown-error mapping
+- ✅ Added `AppErrorMessageX` extension on `AppLocalizations` in `l10n.dart` — keeps UI translation logic out of repositories
+
+### 4. Counter Module Directory Rename
+- ✅ `lib/modules/counter/view/` renamed to `lib/modules/counter/pages/` — consistent with all other modules
+
+### 5. Platform Configuration
+- ✅ `android/app/src/main/AndroidManifest.xml` — permissions for camera, bluetooth, location, biometrics, sensors
+- ✅ `ios/Runner/Info.plist` — usage descriptions for camera, location, bluetooth, Face ID
+- ✅ `windows/flutter/generated_plugin_registrant.cc` / `.cmake` — Windows plugin registrations
+
+### 6. New L10n Keys (86 new strings)
+- ✅ `app_en.arb` and `app_pt.arb` extended with keys for all 13 new modules plus home categories
+- ✅ `flutter gen-l10n` regenerated `app_localizations.dart` (1440 lines)
+
+### 7. Additional Test Coverage
+- ✅ `test/modules/user/user_repository_test.dart` — 3 tests (HTTP 200, 404, connection error) using `MockHttpClient`
+- ✅ `test/core/utils/exceptions_test.dart` — 5 tests for `AppException` hierarchy and `errorCodeOf`
+- ✅ Added `test/helpers/test_database.dart` — in-memory Drift database helper for faster unit tests
+- ✅ Total test suite: **34/34 passing**
+
+---
+
 ## 📊 Project Metrics
 
-| Metric | Phase 0 (Baseline) | Phase 1 (Feb 2026) | Phase 2 (May 2026) |
-|--------|-------------------|-------------------|-------------------|
-| Test files | 0 | 7 | 9 |
-| Test cases | 0 | 22 | 26 |
-| Passing tests | 0 | 20 | 26 |
-| CI jobs | 3 | 11 | 11 |
-| Lint rules | ~10 | 40+ | 40+ |
-| Repository interfaces | 0 | 0 | 3 |
-| Sealed BLoC state files | 0 | 0 | 6 |
-| Barrel files | 0 | 0 | 4 |
-| Documentation | README only | README + CONTRIBUTING + LICENSE + Migrations | same + updated |
-| Flavor scripts | 0 | 6 | 6 |
+| Metric | Phase 0 (Baseline) | Phase 1 (Feb 2026) | Phase 2 (May 2026) | Phase 3 (Jun 2026) |
+|--------|-------------------|-------------------|--------------------|-------------------|
+| Test files | 0 | 7 | 9 | 10 |
+| Test cases | 0 | 22 | 26 | 34 |
+| Passing tests | 0 | 20 | 26 | 34 |
+| CI jobs | 3 | 11 | 11 | 11 |
+| Lint rules | ~10 | 40+ | 40+ | 40+ |
+| Repository interfaces | 0 | 0 | 3 | 3 |
+| Sealed BLoC state files | 0 | 0 | 6 | 6 |
+| Barrel files | 0 | 0 | 4 | 17 |
+| Feature modules | 0 | 0 | 5 | 18 |
+| Packages (runtime deps) | ~8 | ~8 | ~14 | ~27 |
+| Documentation | README only | README + CONTRIBUTING + LICENSE + Migrations | same + updated | same + updated |
+| Flavor scripts | 0 | 6 | 6 | 6 |
 
 ---
 
@@ -215,9 +268,14 @@ The following issues identified in Phase 1 have been resolved:
 - ✅ `contato_page.dart`, `user_page.dart` — non-typed state checks replaced with exhaustive sealed `switch`
 - ✅ `counter_page.dart` — logic extracted into `CounterFabs` widget; conditions corrected
 
+### Resolved in Phase 3
+- ✅ `counter/view/` → `counter/pages/` directory rename — consistent structure across all modules
+- ✅ `exceptions.dart` redesigned — cleaner `AppErrorCode` enum eliminates the need for parallel sealed subclasses
+
 ### Remaining (Non-blocking)
 - Counter widget tests use a generic localization fallback — no impact on functionality
 - iOS CI build disabled pending code-signing setup (pre-existing)
+- Audio module is a placeholder ("Coming soon") — no package integrated yet
 
 ---
 
@@ -259,7 +317,7 @@ The following issues identified in Phase 1 have been resolved:
 - `lib/modules/contato/contato.dart` (barrel)
 - `lib/modules/user/user.dart` (barrel)
 - `lib/modules/counter/counter.dart` (barrel)
-- `lib/modules/counter/view/counter_fabs.dart`
+- `lib/modules/counter/pages/counter_fabs.dart`
 - `lib/core/database/interfaces/` (IAuthRepository, IContatoRepository, IUserRepository)
 
 ### Phase 2 — Modified Files (16)
@@ -300,14 +358,49 @@ The following issues identified in Phase 1 have been resolved:
 - `.github/workflows/ci.yaml`
 - `lefthook.yml`
 
+### Phase 3 — New Files (30+)
+**Feature modules** (barrel + page for each):
+- `lib/modules/network/` (`network.dart`, `pages/network_page.dart`)
+- `lib/modules/biometric/` (`biometric.dart`, `pages/biometric_page.dart`)
+- `lib/modules/sensors/` (`sensors.dart`, `pages/sensors_page.dart`)
+- `lib/modules/qrcode/` (`qrcode.dart`, `pages/qrcode_page.dart`)
+- `lib/modules/camera/` (`camera.dart`, `pages/camera_page.dart`)
+- `lib/modules/bluetooth/` (`bluetooth.dart`, `pages/bluetooth_page.dart`)
+- `lib/modules/geolocation/` (`geolocation.dart`, `pages/geolocation_page.dart`)
+- `lib/modules/pdf/` (`pdf.dart`, `pages/pdf_page.dart`)
+- `lib/modules/file_share/` (`file_share.dart`, `pages/file_share_page.dart`)
+- `lib/modules/printer/` (`printer.dart`, `pages/printer_page.dart`)
+- `lib/modules/html/` (`html.dart`, `pages/html_page.dart`)
+- `lib/modules/charts/` (`charts.dart`, `pages/charts_page.dart`)
+- `lib/modules/lotties/` (`lotties.dart`, `pages/lotties_page.dart`)
+- `lib/modules/home/model/feature_item.dart`
+
+**Tests & helpers:**
+- `test/modules/user/user_repository_test.dart`
+- `test/helpers/test_database.dart`
+
+### Phase 3 — Modified Files
+- `lib/core/app_config/app_routes.dart` — 13 new route constants
+- `lib/core/app_config/router.dart` — 13 new `GoRoute` entries
+- `lib/core/utils/exceptions.dart` — `AppErrorCode` enum + `errorCodeOf` helper
+- `lib/core/services/localization/l10n.dart` — `AppErrorMessageX` extension
+- `lib/core/services/localization/arb/app_en.arb` / `app_pt.arb` — 86 new keys
+- `lib/modules/counter/pages/` — renamed from `view/`
+- `lib/modules/home/pages/home_page.dart` — `FeatureGrid` + category sections
+- `test/core/utils/exceptions_test.dart` — 5 new tests
+- `android/app/src/main/AndroidManifest.xml` — hardware permissions
+- `ios/Runner/Info.plist` — usage descriptions
+- `windows/flutter/generated_plugin_registrant.cc` / `.cmake`
+- `pubspec.yaml` — 13 new runtime dependencies
+
 ---
 
 ## ✅ Verification Checklist
 
-- [x] All planned tasks completed (Phase 1: 10/10, Phase 2: 10/10)
+- [x] All planned tasks completed (Phase 1: 10/10, Phase 2: 10/10, Phase 3: 7/7)
 - [x] Dependencies installed successfully
 - [x] Code formatted without errors
-- [x] 26/26 tests passing (100%)
+- [x] 34/34 tests passing (100%)
 - [x] Zero static analysis errors (`flutter analyze` clean)
 - [x] Documentation accurate and complete
 - [x] Flavors properly configured
@@ -317,6 +410,7 @@ The following issues identified in Phase 1 have been resolved:
 - [x] Security best practices documented
 - [x] Repository interfaces decoupling all BLoC ↔ data layers
 - [x] Sealed class BLoC with exhaustive switch in all feature pages
+- [x] All 18 feature modules wired into router and home grid
 
 ---
 
@@ -325,12 +419,13 @@ The following issues identified in Phase 1 have been resolved:
 ✅ **Onboarding:** New developers have clear CONTRIBUTING.md with setup steps  
 ✅ **Reproducibility:** Scripts and CI ensure consistent builds across environments  
 ✅ **Quality:** Lint rules + pre-commit hooks enforce code standards  
-✅ **Testing:** 26 test cases with 100% pass rate  
+✅ **Testing:** 34 test cases with 100% pass rate  
 ✅ **CI/CD:** Automated pipeline for format, analyze, test, and build  
 ✅ **Documentation:** README aligned with reality, comprehensive guides added  
 ✅ **Security:** Hardcoded secrets removed, dart-define pattern established  
 ✅ **Architecture:** Interface-driven repositories enable easy mocking and swapping  
 ✅ **Exhaustiveness:** Sealed class BLoC eliminates unhandled state bugs at compile time  
+✅ **Showcase:** 18 feature modules covering Data, Network, Hardware, Media, and UI categories  
 
 ---
 
@@ -338,13 +433,14 @@ The following issues identified in Phase 1 have been resolved:
 
 The Template App is **complete and production-ready**. The project now has:
 
-- **Solid foundation:** Testing infrastructure with 26 working examples
+- **Solid foundation:** Testing infrastructure with 34 working examples
 - **Clear workflows:** Scripts, hooks, and CI for consistent development
 - **Quality assurance:** Automated checks prevent regression
 - **Clean architecture:** Interface-driven BLoC with sealed states ensures scalability and maintainability
 - **Developer experience:** Excellent documentation for fast onboarding
 - **Flexibility:** Flavor system supports multiple environments
 - **Maintainability:** Clean structure, migrations guide, and conventions
+- **Rich showcase:** 18 implemented feature modules spanning hardware sensors, connectivity, media, and UI
 
 **Recommendation:** Merge to main branch and make this the standard for all new Flutter projects.
 

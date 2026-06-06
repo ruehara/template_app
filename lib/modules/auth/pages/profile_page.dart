@@ -6,6 +6,7 @@ import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_events.dart';
 import '../blocs/auth_states.dart';
+import '../repository/i_auth_repository.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -13,8 +14,10 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocProvider.value(
-      value: GetIt.instance<AuthBloc>()..add(const CheckAuthEvent()),
+    return BlocProvider(
+      create: (_) =>
+          AuthBloc(GetIt.instance<IAuthRepository>())
+            ..add(const CheckAuthEvent()),
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.profileLabel), centerTitle: true),
         body: BlocConsumer<AuthBloc, AuthState>(
@@ -143,7 +146,7 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-              AuthError(:final message) => Center(
+              AuthError(:final code) => Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -153,7 +156,7 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.red,
                     ),
                     const SizedBox(height: 16),
-                    Text(message),
+                    Text(l10n.messageFor(code)),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {

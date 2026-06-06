@@ -112,9 +112,9 @@ void main() {
         () => authRepository.login('nonexistent', 'wrong'),
         throwsA(
           isA<AuthException>().having(
-            (e) => e.message,
-            'message',
-            contains('UsuÃ¡rio ou senha invÃ¡lidos'),
+            (e) => e.code,
+            'code',
+            AppErrorCode.invalidCredentials,
           ),
         ),
       );
@@ -133,9 +133,9 @@ void main() {
         () => authRepository.login('rodrigo', 'wrongpassword'),
         throwsA(
           isA<AuthException>().having(
-            (e) => e.message,
-            'message',
-            contains('UsuÃ¡rio ou senha invÃ¡lidos'),
+            (e) => e.code,
+            'code',
+            AppErrorCode.invalidCredentials,
           ),
         ),
       );
@@ -180,9 +180,9 @@ void main() {
         () => authRepository.getCurrentUser(),
         throwsA(
           isA<AuthException>().having(
-            (e) => e.message,
-            'message',
-            contains('UsuÃ¡rio nÃ£o autenticado'),
+            (e) => e.code,
+            'code',
+            AppErrorCode.notAuthenticated,
           ),
         ),
       );

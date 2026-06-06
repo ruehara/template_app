@@ -29,7 +29,7 @@ class ContatoPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 ),
                 ContatoLoadedState(:final contatos) => ListView.builder(
-                  itemCount: contatos?.length,
+                  itemCount: contatos.length,
                   itemBuilder: (_, index) {
                     return Card(
                       elevation: 1.5,
@@ -37,7 +37,7 @@ class ContatoPage extends StatelessWidget {
                         mouseCursor: SystemMouseCursors.click,
                         dense: true,
                         visualDensity: VisualDensity.compact,
-                        title: Text('${contatos?[index].descnome}'),
+                        title: Text(contatos[index].descnome),
                       ),
                     );
                   },

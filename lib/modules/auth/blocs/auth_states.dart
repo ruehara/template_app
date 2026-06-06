@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:template_app/core/utils/exceptions.dart';
 import '../model/auth_user_model.dart';
 
 sealed class AuthState extends Equatable {
@@ -30,12 +31,12 @@ final class Unauthenticated extends AuthState {
 }
 
 final class AuthError extends AuthState {
-  final String message;
+  final AppErrorCode code;
 
-  const AuthError(this.message);
+  const AuthError(this.code);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [code];
 }
 
 final class UserUpdated extends AuthState {

@@ -20,6 +20,16 @@
     "edit_profile": "Editar Perfil",
 
     "errorLoadingList": "Erro ao carregar lista",
+    "errorInvalidCredentials": "Usuário ou senha inválidos",
+    "errorNotAuthenticated": "Você não está autenticado",
+    "errorUserNotFound": "Usuário não encontrado",
+    "errorUserAlreadyExists": "Este usuário já existe",
+    "errorNoUnit": "Nenhuma unidade encontrada. Contate o administrador.",
+    "errorNoProfile": "Nenhum perfil encontrado. Contate o administrador.",
+    "errorNoTeam": "Nenhuma equipe encontrada. Contate o administrador.",
+    "errorDatabase": "Ocorreu um erro no banco de dados. Tente novamente.",
+    "errorNetwork": "Ocorreu um erro de rede. Tente novamente.",
+    "errorUnexpected": "Ocorreu um erro inesperado. Tente novamente.",
     "notDefined": "Não definido",
     "cancelButton": "Cancelar",
     "retryButton": "Tentar Novamente",
@@ -94,6 +104,8 @@
     "featureLottiesSubtitle": "Lottie e transições",
     "featureCounterTitle": "Contador",
     "featureCounterSubtitle": "Exemplo BLoC simples",
+    "featureHtmlTitle": "Visualizador HTML",
+    "featureHtmlSubtitle": "Renderizar HTML com papyrus",
 
     "networkTitle": "Conectividade",
     "networkOnline": "Online",
@@ -183,5 +195,77 @@
     "lottiesPlay": "Reproduzir",
     "lottiesRestart": "Reiniciar",
 
-    "testCrashTooltip": "Disparar exceção de teste"
+    "testCrashTooltip": "Disparar exceção de teste",
+
+    "featureFileShareTitle": "Compartilhar",
+    "featureFileShareSubtitle": "Compartilhar texto e arquivos",
+    "featurePrinterTitle": "Impressora",
+    "featurePrinterSubtitle": "Imprimir documentos",
+
+    "cameraTitle": "Câmera",
+    "cameraTakePhoto": "Tirar Foto",
+    "cameraPickGallery": "Escolher da Galeria",
+    "cameraNoImage": "Nenhuma imagem selecionada",
+    "cameraNotSupported": "Câmera não é suportada nesta plataforma.",
+    "cameraErrorPicking": "Falha ao capturar ou selecionar imagem.",
+
+    "bluetoothTitle": "Bluetooth (BLE)",
+    "bluetoothScan": "Escanear",
+    "bluetoothStop": "Parar",
+    "bluetoothScanning": "Escaneando...",
+    "bluetoothNoDevices": "Nenhum dispositivo encontrado",
+    "bluetoothDevicesFound": "dispositivos encontrados",
+    "bluetoothNotSupported": "Bluetooth não é suportado nesta plataforma.",
+    "bluetoothAdapterOff": "Bluetooth está desligado. Ative-o e tente novamente.",
+    "bluetoothDeviceUnknown": "Dispositivo desconhecido",
+    "bluetoothPairedDevices": "Dispositivos Pareados",
+    "bluetoothNearbyDevices": "Dispositivos Próximos",
+    "bluetoothConnected": "Conectado",
+
+    "geolocationTitle": "Geolocalização",
+    "geolocationGetPosition": "Obter Minha Localização",
+    "geolocationLatitude": "Latitude",
+    "geolocationLongitude": "Longitude",
+    "geolocationAltitude": "Altitude",
+    "geolocationAccuracy": "Precisão",
+    "geolocationSpeed": "Velocidade",
+    "geolocationWaiting": "Toque no botão para obter sua localização.",
+    "geolocationLoading": "Obtendo localização...",
+    "geolocationError": "Erro: {message}",
+    "@geolocationError": {
+        "placeholders": {
+            "message": { "type": "String" }
+        }
+    },
+    "geolocationPermissionDenied": "Permissão de localização negada. Ative nas configurações.",
+    "geolocationPermissionDeniedForever": "Permissão de localização negada permanentemente. Abra as configurações do app.",
+    "geolocationServiceDisabled": "Serviços de localização desativados. Ative o GPS e tente novamente.",
+
+    "pdfTitle": "PDF",
+    "pdfPreview": "Visualizar / Imprimir",
+    "pdfInfo": "Toque para gerar um PDF de exemplo e abrir a prévia de impressão e compartilhamento.",
+
+    "fileShareTitle": "Compartilhar",
+    "fileShareLabel": "Conteúdo para compartilhar",
+    "fileShareHint": "Digite algo para compartilhar...",
+    "fileShareShareButton": "Compartilhar",
+    "fileShareEmptyError": "Por favor, digite algo para compartilhar.",
+
+    "printerTitle": "Impressora",
+    "printerPrint": "Imprimir",
+    "printerPreview": "Prévia",
+    "printerListLabel": "Impressoras Disponíveis",
+    "printerNoDevices": "Nenhuma impressora encontrada neste dispositivo.",
+    "printerPrinting": "Enviando para a impressora...",
+    "printerSuccess": "Documento enviado para a impressora!",
+    "printerError": "Erro de impressão: {message}",
+    "@printerError": {
+        "placeholders": {
+            "message": { "type": "String" }
+        }
+    },
+
+    "htmlTitle": "Visualizador HTML",
+    "htmlSampleHeading": "Olá do Papyrus!",
+    "htmlSampleParagraph": "Esta página é HTML puro renderizado dentro de uma WebView segura e controlada por políticas."
 }

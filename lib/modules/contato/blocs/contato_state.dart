@@ -13,7 +13,7 @@ final class ContatoLoadingState extends ContatoState {
 
 final class ContatoLoadedState extends ContatoState {
   const ContatoLoadedState(this.contatos);
-  final List<Usuario>? contatos;
+  final List<Usuario> contatos;
   @override
   List<Object?> get props => [contatos];
 }

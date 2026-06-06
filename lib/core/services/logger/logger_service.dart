@@ -26,6 +26,9 @@ class LoggerService {
       error: error,
     );
 
+    // No remote endpoint configured: keep logging local-only.
+    if (_apiUrl.isEmpty) return;
+
     try {
       final body = jsonEncode({
         'error': error.toString(),

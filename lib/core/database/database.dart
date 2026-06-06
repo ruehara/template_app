@@ -1,6 +1,7 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:template_app/core/utils/env.dart';
 import 'connection/connection.dart';
 import 'database.drift.dart';
 import 'tables/schema.drift.dart';
@@ -44,12 +45,7 @@ class Database extends $Database {
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');
         // Only seed database if DB_SEED_ENABLED is set to 'true' (via dart-define)
-        if (details.wasCreated &&
-            const String.fromEnvironment(
-                  'DB_SEED_ENABLED',
-                  defaultValue: 'false',
-                ) ==
-                'true') {
+        if (details.wasCreated && Env.isDbSeedEnabled) {
           await (await SharedPreferences.getInstance()).clear();
           await batch((b) {
             b.insert(

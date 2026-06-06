@@ -7,7 +7,7 @@ import 'package:template_app/core/services/shared_prefs/shared_preferences.dart'
 import 'package:template_app/core/services/theme/cubit/theme_cubit.dart';
 import 'package:template_app/core/services/localization/cubit/language_cubit.dart';
 import 'package:template_app/core/services/localization/generated/app_localizations.dart';
-import 'package:template_app/modules/counter/view/counter_page.dart';
+import 'package:template_app/modules/counter/pages/counter_page.dart';
 import '../../helpers/mock_shared_preferences.dart';
 import '../../helpers/test_helpers.dart';
 

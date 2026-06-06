@@ -9,20 +9,14 @@ class ContatoRepository implements IContatoRepository {
   final Database _db;
 
   @override
-  Future<List<Usuario>?> getContatos() async {
+  Future<List<Usuario>> getContatos() async {
     try {
       return _db.select(_db.tafusuario).get();
     } catch (e) {
-      throw DatabaseException('Erro ao buscar contatos: $e');
-    }
-  }
-
-  @override
-  Future<List<Usuario>?> getStreamContatos() async {
-    try {
-      return _db.select(_db.tafusuario).get();
-    } catch (e) {
-      throw DatabaseException('Erro ao buscar contatos: $e');
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao buscar contatos: $e',
+      );
     }
   }
 }

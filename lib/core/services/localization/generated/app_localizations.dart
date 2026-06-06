@@ -187,6 +187,66 @@ abstract class AppLocalizations {
   /// **'Error loading list'**
   String get errorLoadingList;
 
+  /// No description provided for @errorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid username or password'**
+  String get errorInvalidCredentials;
+
+  /// No description provided for @errorNotAuthenticated.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not signed in'**
+  String get errorNotAuthenticated;
+
+  /// No description provided for @errorUserNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get errorUserNotFound;
+
+  /// No description provided for @errorUserAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This user already exists'**
+  String get errorUserAlreadyExists;
+
+  /// No description provided for @errorNoUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'No unit found. Contact the administrator.'**
+  String get errorNoUnit;
+
+  /// No description provided for @errorNoProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'No profile found. Contact the administrator.'**
+  String get errorNoProfile;
+
+  /// No description provided for @errorNoTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'No team found. Contact the administrator.'**
+  String get errorNoTeam;
+
+  /// No description provided for @errorDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'A database error occurred. Please try again.'**
+  String get errorDatabase;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'A network error occurred. Please try again.'**
+  String get errorNetwork;
+
+  /// No description provided for @errorUnexpected.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get errorUnexpected;
+
   /// No description provided for @notDefined.
   ///
   /// In en, this message translates to:
@@ -601,6 +661,18 @@ abstract class AppLocalizations {
   /// **'Simple BLoC example'**
   String get featureCounterSubtitle;
 
+  /// No description provided for @featureHtmlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'HTML Viewer'**
+  String get featureHtmlTitle;
+
+  /// No description provided for @featureHtmlSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Render HTML with papyrus'**
+  String get featureHtmlSubtitle;
+
   /// No description provided for @networkTitle.
   ///
   /// In en, this message translates to:
@@ -1008,6 +1080,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Trigger test exception'**
   String get testCrashTooltip;
+
+  /// No description provided for @featureFileShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'File Share'**
+  String get featureFileShareTitle;
+
+  /// No description provided for @featureFileShareSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share text and files'**
+  String get featureFileShareSubtitle;
+
+  /// No description provided for @featurePrinterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer'**
+  String get featurePrinterTitle;
+
+  /// No description provided for @featurePrinterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Print documents'**
+  String get featurePrinterSubtitle;
+
+  /// No description provided for @cameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get cameraTitle;
+
+  /// No description provided for @cameraTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get cameraTakePhoto;
+
+  /// No description provided for @cameraPickGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from Gallery'**
+  String get cameraPickGallery;
+
+  /// No description provided for @cameraNoImage.
+  ///
+  /// In en, this message translates to:
+  /// **'No image selected'**
+  String get cameraNoImage;
+
+  /// No description provided for @cameraNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera is not supported on this platform.'**
+  String get cameraNotSupported;
+
+  /// No description provided for @cameraErrorPicking.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to pick or capture image.'**
+  String get cameraErrorPicking;
+
+  /// No description provided for @bluetoothTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth (BLE)'**
+  String get bluetoothTitle;
+
+  /// No description provided for @bluetoothScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan'**
+  String get bluetoothScan;
+
+  /// No description provided for @bluetoothStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get bluetoothStop;
+
+  /// No description provided for @bluetoothScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning...'**
+  String get bluetoothScanning;
+
+  /// No description provided for @bluetoothNoDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No devices found'**
+  String get bluetoothNoDevices;
+
+  /// No description provided for @bluetoothDevicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'devices found'**
+  String get bluetoothDevicesFound;
+
+  /// No description provided for @bluetoothNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is not supported on this platform.'**
+  String get bluetoothNotSupported;
+
+  /// No description provided for @bluetoothAdapterOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is off. Enable it and try again.'**
+  String get bluetoothAdapterOff;
+
+  /// No description provided for @bluetoothDeviceUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown device'**
+  String get bluetoothDeviceUnknown;
+
+  /// No description provided for @bluetoothPairedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Paired Devices'**
+  String get bluetoothPairedDevices;
+
+  /// No description provided for @bluetoothNearbyDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Devices'**
+  String get bluetoothNearbyDevices;
+
+  /// No description provided for @bluetoothConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get bluetoothConnected;
+
+  /// No description provided for @geolocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Geolocation'**
+  String get geolocationTitle;
+
+  /// No description provided for @geolocationGetPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Get My Location'**
+  String get geolocationGetPosition;
+
+  /// No description provided for @geolocationLatitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get geolocationLatitude;
+
+  /// No description provided for @geolocationLongitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get geolocationLongitude;
+
+  /// No description provided for @geolocationAltitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Altitude'**
+  String get geolocationAltitude;
+
+  /// No description provided for @geolocationAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get geolocationAccuracy;
+
+  /// No description provided for @geolocationSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get geolocationSpeed;
+
+  /// No description provided for @geolocationWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the button to get your location.'**
+  String get geolocationWaiting;
+
+  /// No description provided for @geolocationLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting location...'**
+  String get geolocationLoading;
+
+  /// No description provided for @geolocationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String geolocationError(String message);
+
+  /// No description provided for @geolocationPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied. Please enable it in settings.'**
+  String get geolocationPermissionDenied;
+
+  /// No description provided for @geolocationPermissionDeniedForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission permanently denied. Open app settings to enable it.'**
+  String get geolocationPermissionDeniedForever;
+
+  /// No description provided for @geolocationServiceDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Location services are disabled. Please enable GPS and try again.'**
+  String get geolocationServiceDisabled;
+
+  /// No description provided for @pdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get pdfTitle;
+
+  /// No description provided for @pdfPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview / Print'**
+  String get pdfPreview;
+
+  /// No description provided for @pdfInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to generate a sample PDF and open the print and share preview.'**
+  String get pdfInfo;
+
+  /// No description provided for @fileShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'File Share'**
+  String get fileShareTitle;
+
+  /// No description provided for @fileShareLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Content to share'**
+  String get fileShareLabel;
+
+  /// No description provided for @fileShareHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type something to share...'**
+  String get fileShareHint;
+
+  /// No description provided for @fileShareShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get fileShareShareButton;
+
+  /// No description provided for @fileShareEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter something to share.'**
+  String get fileShareEmptyError;
+
+  /// No description provided for @printerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer'**
+  String get printerTitle;
+
+  /// No description provided for @printerPrint.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get printerPrint;
+
+  /// No description provided for @printerPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get printerPreview;
+
+  /// No description provided for @printerListLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Printers'**
+  String get printerListLabel;
+
+  /// No description provided for @printerNoDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'No printers found on this device.'**
+  String get printerNoDevices;
+
+  /// No description provided for @printerPrinting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending to printer...'**
+  String get printerPrinting;
+
+  /// No description provided for @printerSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Document sent to printer!'**
+  String get printerSuccess;
+
+  /// No description provided for @printerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Print error: {message}'**
+  String printerError(String message);
+
+  /// No description provided for @htmlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'HTML Viewer'**
+  String get htmlTitle;
+
+  /// No description provided for @htmlSampleHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello from Papyrus!'**
+  String get htmlSampleHeading;
+
+  /// No description provided for @htmlSampleParagraph.
+  ///
+  /// In en, this message translates to:
+  /// **'This page is raw HTML rendered inside a secure, policy-driven WebView.'**
+  String get htmlSampleParagraph;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

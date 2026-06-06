@@ -18,8 +18,8 @@ Thank you for your interest in contributing to Template App! This document provi
 
 ### Prerequisites
 
-- Flutter SDK 3.38.x or later
-- Dart SDK 3.10.8 or later
+- Flutter SDK 3.44.x or later
+- Dart SDK 3.12.x or later
 - Android Studio / VS Code with Flutter extensions
 - Git
 
@@ -221,13 +221,30 @@ lib/
     database/                # Drift database configuration
     services/                # Shared services (theme, localization, etc.)
     utils/                   # Utilities, constants, helpers
-  modules/                   # Feature modules
-    <feature>/
-      blocs/                 # BLoC state management
-      models/                # Data models
-      pages/                 # UI pages/screens
-      repository/            # Data access layer
-      widgets/               # Feature-specific widgets (optional)
+  modules/                   # Feature modules (18 total)
+    auth/                    # Login, registration, profile (BLoC + Drift)
+    contato/                 # Contacts CRUD with local database
+    counter/                 # Simple BLoC example
+    user/                    # HTTP list from random user API
+    home/                    # Feature showcase grid
+    network/                 # Real-time connectivity (connectivity_plus)
+    biometric/               # Fingerprint / Face ID (local_auth)
+    sensors/                 # Accelerometer & gyroscope (sensors_plus)
+    qrcode/                  # QR and barcode scanner (mobile_scanner)
+    camera/                  # Photo capture and gallery (image_picker)
+    bluetooth/               # BLE device list (flutter_blue_plus)
+    geolocation/             # GPS positioning (geolocator)
+    pdf/                     # PDF generation and print (pdf + printing)
+    file_share/              # Share text and files (share_plus)
+    printer/                 # Document printing (printing)
+    html/                    # HTML viewer (papyrus)
+    charts/                  # Line, bar and pie charts (fl_chart)
+    lotties/                 # Lottie animations (lottie)
+    <feature>/               # Convention for new modules:
+      blocs/                 #   BLoC state management
+      model/                 #   Data models
+      pages/                 #   UI pages/screens
+      repository/            #   Data access layer
 ```
 
 ### Naming Conventions

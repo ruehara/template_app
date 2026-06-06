@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:template_app/core/utils/exceptions.dart';
 import '../repository/i_auth_repository.dart';
 import 'auth_events.dart';
 import 'auth_states.dart';
@@ -20,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.login(event.username, event.password);
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(errorCodeOf(e)));
     }
   }
 
@@ -37,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.login(event.login, event.password);
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(errorCodeOf(e)));
     }
   }
 
@@ -46,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _authRepository.logout();
       emit(const Unauthenticated());
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(errorCodeOf(e)));
     }
   }
 
@@ -62,7 +63,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.getCurrentUser();
       emit(Authenticated(user));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError(errorCodeOf(e)));
     }
   }
 

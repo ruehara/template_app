@@ -5,12 +5,19 @@ import 'package:template_app/core/app_config/app_routes.dart';
 import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/modules/auth/auth.dart';
 import 'package:template_app/modules/biometric/biometric.dart';
+import 'package:template_app/modules/bluetooth/bluetooth.dart';
+import 'package:template_app/modules/camera/camera.dart';
 import 'package:template_app/modules/charts/charts.dart';
 import 'package:template_app/modules/contato/contato.dart';
 import 'package:template_app/modules/counter/counter.dart';
+import 'package:template_app/modules/file_share/file_share.dart';
+import 'package:template_app/modules/geolocation/geolocation.dart';
 import 'package:template_app/modules/home/home.dart';
+import 'package:template_app/modules/html/html.dart';
 import 'package:template_app/modules/lotties/lotties.dart';
 import 'package:template_app/modules/network/network.dart';
+import 'package:template_app/modules/pdf/pdf.dart';
+import 'package:template_app/modules/printer/printer.dart';
 import 'package:template_app/modules/qrcode/qrcode.dart';
 import 'package:template_app/modules/sensors/sensors.dart';
 import 'package:template_app/modules/user/user.dart';
@@ -97,11 +104,6 @@ final GoRouter router = GoRouter(
       pageBuilder: (_, state) => _fadePage(state, const ContatoPage()),
     ),
     GoRoute(
-      path: AppRoutes.contato2,
-      name: AppRoutes.contato2Name,
-      pageBuilder: (_, state) => _fadePage(state, const ContatoPage()),
-    ),
-    GoRoute(
       path: AppRoutes.network,
       name: AppRoutes.networkName,
       pageBuilder: (_, state) => _fadePage(state, const NetworkPage()),
@@ -130,6 +132,41 @@ final GoRouter router = GoRouter(
       path: AppRoutes.lotties,
       name: AppRoutes.lottiesName,
       pageBuilder: (_, state) => _fadePage(state, const LottiesPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.camera,
+      name: AppRoutes.cameraName,
+      pageBuilder: (_, state) => _fadePage(state, const CameraPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.bluetooth,
+      name: AppRoutes.bluetoothName,
+      pageBuilder: (_, state) => _fadePage(state, const BluetoothPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.geolocation,
+      name: AppRoutes.geolocationName,
+      pageBuilder: (_, state) => _fadePage(state, const GeolocationPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.pdf,
+      name: AppRoutes.pdfName,
+      pageBuilder: (_, state) => _fadePage(state, const PdfPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.fileShare,
+      name: AppRoutes.fileShareName,
+      pageBuilder: (_, state) => _fadePage(state, const FileSharePage()),
+    ),
+    GoRoute(
+      path: AppRoutes.printer,
+      name: AppRoutes.printerName,
+      pageBuilder: (_, state) => _fadePage(state, const PrinterPage()),
+    ),
+    GoRoute(
+      path: AppRoutes.html,
+      name: AppRoutes.htmlName,
+      pageBuilder: (_, state) => _fadePage(state, const HtmlPage()),
     ),
   ],
 );

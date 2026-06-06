@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/app_config/app_routes.dart';
 import 'package:template_app/core/services/localization/l10n.dart';
 import 'package:template_app/core/utils/exit_dialog.dart';
 import 'package:template_app/modules/counter/blocs/counter_bloc.dart';
@@ -90,7 +91,7 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
             IconButton(
               icon: const Icon(Icons.person),
               tooltip: l10n.profileLabel,
-              onPressed: () => context.pushNamed('profile'),
+              onPressed: () => context.pushNamed(AppRoutes.profileName),
             ),
           ],
         ),

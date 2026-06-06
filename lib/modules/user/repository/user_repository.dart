@@ -29,13 +29,19 @@ class UserRepository implements IUserRepository {
             .toList();
       } else {
         throw NetworkException(
-          response.reasonPhrase ?? 'Erro desconhecido (${response.statusCode})',
+          AppErrorCode.network,
+          details:
+              response.reasonPhrase ??
+              'Erro desconhecido (${response.statusCode})',
         );
       }
     } on AppException {
       rethrow;
     } catch (e) {
-      throw NetworkException('Erro ao buscar usuários: $e');
+      throw NetworkException(
+        AppErrorCode.network,
+        details: 'Erro ao buscar usuários: $e',
+      );
     } finally {
       if (shouldClose) client.close();
     }

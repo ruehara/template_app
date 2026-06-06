@@ -20,6 +20,16 @@
     "edit_profile": "Edit Profile",
 
     "errorLoadingList": "Error loading list",
+    "errorInvalidCredentials": "Invalid username or password",
+    "errorNotAuthenticated": "You are not signed in",
+    "errorUserNotFound": "User not found",
+    "errorUserAlreadyExists": "This user already exists",
+    "errorNoUnit": "No unit found. Contact the administrator.",
+    "errorNoProfile": "No profile found. Contact the administrator.",
+    "errorNoTeam": "No team found. Contact the administrator.",
+    "errorDatabase": "A database error occurred. Please try again.",
+    "errorNetwork": "A network error occurred. Please try again.",
+    "errorUnexpected": "An unexpected error occurred. Please try again.",
     "notDefined": "Not defined",
     "cancelButton": "Cancel",
     "retryButton": "Try again",
@@ -94,6 +104,8 @@
     "featureLottiesSubtitle": "Lottie and transitions",
     "featureCounterTitle": "Counter",
     "featureCounterSubtitle": "Simple BLoC example",
+    "featureHtmlTitle": "HTML Viewer",
+    "featureHtmlSubtitle": "Render HTML with papyrus",
 
     "networkTitle": "Connectivity",
     "networkOnline": "Online",
@@ -183,5 +195,77 @@
     "lottiesPlay": "Play",
     "lottiesRestart": "Restart",
 
-    "testCrashTooltip": "Trigger test exception"
+    "testCrashTooltip": "Trigger test exception",
+
+    "featureFileShareTitle": "File Share",
+    "featureFileShareSubtitle": "Share text and files",
+    "featurePrinterTitle": "Printer",
+    "featurePrinterSubtitle": "Print documents",
+
+    "cameraTitle": "Camera",
+    "cameraTakePhoto": "Take Photo",
+    "cameraPickGallery": "Pick from Gallery",
+    "cameraNoImage": "No image selected",
+    "cameraNotSupported": "Camera is not supported on this platform.",
+    "cameraErrorPicking": "Failed to pick or capture image.",
+
+    "bluetoothTitle": "Bluetooth (BLE)",
+    "bluetoothScan": "Scan",
+    "bluetoothStop": "Stop",
+    "bluetoothScanning": "Scanning...",
+    "bluetoothNoDevices": "No devices found",
+    "bluetoothDevicesFound": "devices found",
+    "bluetoothNotSupported": "Bluetooth is not supported on this platform.",
+    "bluetoothAdapterOff": "Bluetooth is off. Enable it and try again.",
+    "bluetoothDeviceUnknown": "Unknown device",
+    "bluetoothPairedDevices": "Paired Devices",
+    "bluetoothNearbyDevices": "Nearby Devices",
+    "bluetoothConnected": "Connected",
+
+    "geolocationTitle": "Geolocation",
+    "geolocationGetPosition": "Get My Location",
+    "geolocationLatitude": "Latitude",
+    "geolocationLongitude": "Longitude",
+    "geolocationAltitude": "Altitude",
+    "geolocationAccuracy": "Accuracy",
+    "geolocationSpeed": "Speed",
+    "geolocationWaiting": "Tap the button to get your location.",
+    "geolocationLoading": "Getting location...",
+    "geolocationError": "Error: {message}",
+    "@geolocationError": {
+        "placeholders": {
+            "message": { "type": "String" }
+        }
+    },
+    "geolocationPermissionDenied": "Location permission denied. Please enable it in settings.",
+    "geolocationPermissionDeniedForever": "Location permission permanently denied. Open app settings to enable it.",
+    "geolocationServiceDisabled": "Location services are disabled. Please enable GPS and try again.",
+
+    "pdfTitle": "PDF",
+    "pdfPreview": "Preview / Print",
+    "pdfInfo": "Tap to generate a sample PDF and open the print and share preview.",
+
+    "fileShareTitle": "File Share",
+    "fileShareLabel": "Content to share",
+    "fileShareHint": "Type something to share...",
+    "fileShareShareButton": "Share",
+    "fileShareEmptyError": "Please enter something to share.",
+
+    "printerTitle": "Printer",
+    "printerPrint": "Print",
+    "printerPreview": "Preview",
+    "printerListLabel": "Available Printers",
+    "printerNoDevices": "No printers found on this device.",
+    "printerPrinting": "Sending to printer...",
+    "printerSuccess": "Document sent to printer!",
+    "printerError": "Print error: {message}",
+    "@printerError": {
+        "placeholders": {
+            "message": { "type": "String" }
+        }
+    },
+
+    "htmlTitle": "HTML Viewer",
+    "htmlSampleHeading": "Hello from Papyrus!",
+    "htmlSampleParagraph": "This page is raw HTML rendered inside a secure, policy-driven WebView."
 }
