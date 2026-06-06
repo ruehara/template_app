@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:template_app/core/services/localization/l10n.dart';
 import '../blocs/auth_bloc.dart';
 import '../blocs/auth_events.dart';
 import '../blocs/auth_states.dart';
+import '../repository/i_auth_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -39,28 +41,30 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: GetIt.instance<AuthBloc>(),
+    return BlocProvider(
+      create: (_) => AuthBloc(GetIt.instance<IAuthRepository>()),
       child: Scaffold(
         body: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24.0),
             child: BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
-                if (state is Authenticated) {
-                  // Navigate to counter page on successful login
-                  context.goNamed('counter');
-                } else if (state is AuthError) {
-                  // Show error message
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
+                switch (state) {
+                  case Authenticated():
+                    context.goNamed('counter');
+                  case AuthError(:final code):
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(context.l10n.messageFor(code)),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  default:
+                    break;
                 }
               },
               builder: (context, state) {
+                final l10n = context.l10n;
                 final isLoading = state is AuthLoading;
 
                 return Card(
@@ -82,22 +86,22 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             const SizedBox(height: 24),
                             Text(
-                              'Login',
+                              l10n.loginTitle,
                               style: Theme.of(context).textTheme.headlineMedium,
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 32),
                             TextFormField(
                               controller: _usernameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Usuário',
-                                prefixIcon: Icon(Icons.person),
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.usernameLabel,
+                                prefixIcon: const Icon(Icons.person),
+                                border: const OutlineInputBorder(),
                               ),
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
-                                  return 'Por favor, informe o usuário';
+                                  return l10n.usernameRequired;
                                 }
                                 return null;
                               },
@@ -106,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                             TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                labelText: 'Senha',
+                                labelText: l10n.passwordLabel,
                                 prefixIcon: const Icon(Icons.lock),
                                 border: const OutlineInputBorder(),
                                 suffixIcon: IconButton(
@@ -126,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                               enabled: !isLoading,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Por favor, informe a senha';
+                                  return l10n.passwordRequired;
                                 }
                                 return null;
                               },
@@ -149,9 +153,9 @@ class _LoginPageState extends State<LoginPage> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : const Text(
-                                      'Entrar',
-                                      style: TextStyle(fontSize: 16),
+                                  : Text(
+                                      l10n.enterButton,
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                             ),
                             const SizedBox(height: 16),
@@ -159,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: isLoading
                                   ? null
                                   : () => context.pushNamed('register'),
-                              child: const Text('Criar nova conta'),
+                              child: Text(l10n.createAccountButton),
                             ),
                           ],
                         ),

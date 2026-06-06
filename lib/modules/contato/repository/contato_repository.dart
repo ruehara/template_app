@@ -1,50 +1,22 @@
-import 'package:get_it/get_it.dart';
 import 'package:template_app/core/database/database.dart';
 import 'package:template_app/core/database/tables/schema.drift.dart';
+import 'package:template_app/core/utils/exceptions.dart';
+import 'i_contato_repository.dart';
 
-class ContatoRepository {
-  final Database db = GetIt.instance<Database>();
-  Future<List<Usuario>?> getContatos() async {
-    return await db
-        .customSelect('select codusuario, descnome from tafusuario')
-        .get()
-        .then((rows) {
-          return rows
-              .map(
-                (row) => Usuario(
-                  codusuario: row.read<String>('codusuario'),
-                  descnome: row.read<String>('descnome'),
-                  codunidade: '',
-                  codperfil: '',
-                  codequipe: '',
-                  desclogin: '',
-                  descsenha: '',
-                  descemail: '',
-                ),
-              )
-              .toList();
-        });
-  }
+class ContatoRepository implements IContatoRepository {
+  ContatoRepository({required Database database}) : _db = database;
 
-  Future<List<Usuario>?> getStreamContatos() async {
-    return await db
-        .customSelect('select codusuario, descnome from tafusuario')
-        .get()
-        .then((rows) {
-          return rows
-              .map(
-                (row) => Usuario(
-                  codusuario: row.read<String>('codusuario'),
-                  descnome: row.read<String>('descnome'),
-                  codunidade: '',
-                  codperfil: '',
-                  codequipe: '',
-                  desclogin: '',
-                  descsenha: '',
-                  descemail: '',
-                ),
-              )
-              .toList();
-        });
+  final Database _db;
+
+  @override
+  Future<List<Usuario>> getContatos() async {
+    try {
+      return _db.select(_db.tafusuario).get();
+    } catch (e) {
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao buscar contatos: $e',
+      );
+    }
   }
 }

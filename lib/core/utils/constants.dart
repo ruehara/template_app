@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 const counterVar = 'counter';
 const localeVar = 'locale';
@@ -23,17 +24,21 @@ const mediaDir = 'Media';
 /// Stores the debug windows path
 const debugWindowsPath = 'build\\windows\\x64\\runner\\Debug';
 
-const logErrorApiUrl = 'http://localhost:5000/api/log';
+// logErrorApiUrl is now configured via Env.logErrorApiUrl (dart-define)
 
-/// Returns the app path
-String get appPath {
+String _appPath = '';
+
+/// Returns the app path (must call [initAppPath] first during bootstrap)
+String get appPath => _appPath;
+
+/// Initializes [appPath] once at startup using the correct platform directory.
+Future<void> initAppPath() async {
   if (Platform.isWindows) {
-    if (kDebugMode) {
-      return p.join(Directory.current.path, debugWindowsPath);
-    } else {
-      return Directory.current.path;
-    }
+    _appPath = kDebugMode
+        ? p.join(Directory.current.path, debugWindowsPath)
+        : Directory.current.path;
+  } else {
+    final dir = await getApplicationDocumentsDirectory();
+    _appPath = dir.path;
   }
-  var directory = Directory.current;
-  return directory.path;
 }

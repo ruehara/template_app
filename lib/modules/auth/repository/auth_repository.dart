@@ -1,169 +1,139 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:drift/drift.dart';
-import 'package:get_it/get_it.dart';
-import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
 import 'package:template_app/core/database/database.dart';
+import 'package:template_app/core/database/tables/schema.drift.dart';
+import 'package:template_app/core/services/shared_prefs/shared_preferences.dart';
+import 'package:template_app/core/utils/exceptions.dart';
 import 'package:uuid/uuid.dart';
 import '../model/auth_user_model.dart';
+import 'i_auth_repository.dart';
 
-class AuthRepository {
-  final Database _database = GetIt.instance<Database>();
-  final AppSharedPreferences _prefs = GetIt.instance<AppSharedPreferences>();
+class AuthRepository implements IAuthRepository {
+  AuthRepository({
+    required this._database,
+    required this._prefs,
+  });
 
-  /// Login user with username and password
-  /// Returns AuthUserModel if successful, throws exception otherwise
+  final Database _database;
+  final AppSharedPreferences _prefs;
+
+  @override
   Future<AuthUserModel> login(String username, String password) async {
     try {
-      // Query user by login
-      final result = await _database
-          .customSelect(
-            '''
-        SELECT 
-          u.codusuario, 
-          u.descnome, 
-          u.desclogin, 
-          u.descemail, 
-          u.descsenha,
-          un.descunidade,
-          p.descperfil
-        FROM tafusuario u
-        LEFT JOIN tafunidade un ON u.codunidade = un.codunidade
-        LEFT JOIN tafperfil p ON u.codperfil = p.codperfil
-        WHERE u.desclogin = ?
-        ''',
-            variables: [Variable.withString(username)],
-          )
-          .getSingleOrNull();
+      final query = _database.select(_database.tafusuario).join([
+        leftOuterJoin(
+          _database.tafunidade,
+          _database.tafunidade.codunidade.equalsExp(
+            _database.tafusuario.codunidade,
+          ),
+        ),
+        leftOuterJoin(
+          _database.tafperfil,
+          _database.tafperfil.codperfil.equalsExp(
+            _database.tafusuario.codperfil,
+          ),
+        ),
+      ])..where(_database.tafusuario.desclogin.equals(username));
 
-      if (result == null) {
-        throw Exception('Usuário ou senha inválidos');
+      final row = await query.getSingleOrNull();
+      if (row == null) {
+        throw const AuthException(AppErrorCode.invalidCredentials);
       }
 
-      // Verify password with bcrypt
-      final storedHash = result.read<String>('descsenha');
-      final isValidPassword = BCrypt.checkpw(password, storedHash);
-
-      if (!isValidPassword) {
-        throw Exception('Usuário ou senha inválidos');
+      final usuario = row.readTable(_database.tafusuario);
+      if (!BCrypt.checkpw(password, usuario.descsenha)) {
+        throw const AuthException(AppErrorCode.invalidCredentials);
       }
 
-      // Save user ID to SharedPreferences
-      final userId = result.read<String>('codusuario');
-      _prefs.setAuthUserId(userId);
-
-      // Return user model
-      return AuthUserModel(
-        codusuario: userId,
-        descnome: result.read<String>('descnome'),
-        desclogin: result.read<String>('desclogin'),
-        descemail: result.read<String>('descemail'),
-        descunidade: result.read<String?>('descunidade') ?? '',
-        descperfil: result.read<String?>('descperfil') ?? '',
-      );
+      _prefs.setAuthUserId(usuario.codusuario);
+      return _buildAuthUser(row);
+    } on AppException {
+      rethrow;
     } catch (e) {
-      throw Exception('Erro ao realizar login: ${e.toString()}');
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao realizar login: $e',
+      );
     }
   }
 
-  /// Logout current user
+  @override
   Future<void> logout() async {
     _prefs.clearAuth();
   }
 
-  /// Get current authenticated user
-  /// Returns AuthUserModel if user is authenticated, throws exception otherwise
+  @override
   Future<AuthUserModel> getCurrentUser() async {
     try {
       final userId = _prefs.getAuthUserId();
       if (userId == null) {
-        throw Exception('Usuário não autenticado');
+        throw const AuthException(AppErrorCode.notAuthenticated);
       }
 
-      final result = await _database
-          .customSelect(
-            '''
-        SELECT 
-          u.codusuario, 
-          u.descnome, 
-          u.desclogin, 
-          u.descemail,
-          un.descunidade,
-          p.descperfil
-        FROM tafusuario u
-        LEFT JOIN tafunidade un ON u.codunidade = un.codunidade
-        LEFT JOIN tafperfil p ON u.codperfil = p.codperfil
-        WHERE u.codusuario = ?
-        ''',
-            variables: [Variable.withString(userId)],
-          )
-          .getSingleOrNull();
+      final query = _database.select(_database.tafusuario).join([
+        leftOuterJoin(
+          _database.tafunidade,
+          _database.tafunidade.codunidade.equalsExp(
+            _database.tafusuario.codunidade,
+          ),
+        ),
+        leftOuterJoin(
+          _database.tafperfil,
+          _database.tafperfil.codperfil.equalsExp(
+            _database.tafusuario.codperfil,
+          ),
+        ),
+      ])..where(_database.tafusuario.codusuario.equals(userId));
 
-      if (result == null) {
-        throw Exception('Usuário não encontrado');
+      final row = await query.getSingleOrNull();
+      if (row == null) {
+        throw const DatabaseException(AppErrorCode.userNotFound);
       }
 
-      return AuthUserModel(
-        codusuario: result.read<String>('codusuario'),
-        descnome: result.read<String>('descnome'),
-        desclogin: result.read<String>('desclogin'),
-        descemail: result.read<String>('descemail'),
-        descunidade: result.read<String?>('descunidade') ?? '',
-        descperfil: result.read<String?>('descperfil') ?? '',
-      );
+      return _buildAuthUser(row);
+    } on AppException {
+      rethrow;
     } catch (e) {
-      throw Exception('Erro ao buscar usuário: ${e.toString()}');
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao buscar usuário: $e',
+      );
     }
   }
 
-  /// Update user information (name, login, and optionally password)
-  /// If password is null, keeps existing password
+  @override
   Future<void> updateUser(String nome, String login, String? senha) async {
     try {
       final userId = _prefs.getAuthUserId();
       if (userId == null) {
-        throw Exception('Usuário não autenticado');
+        throw const AuthException(AppErrorCode.notAuthenticated);
       }
 
-      // Prepare update companion
+      final companion = (senha != null && senha.isNotEmpty)
+          ? TafusuarioCompanion(
+              descnome: Value(nome),
+              desclogin: Value(login),
+              descsenha: Value(BCrypt.hashpw(senha, BCrypt.gensalt())),
+            )
+          : TafusuarioCompanion(
+              descnome: Value(nome),
+              desclogin: Value(login),
+            );
 
-      // If password is provided, hash it and add to update
-      if (senha != null && senha.isNotEmpty) {
-        final hashedPassword = BCrypt.hashpw(senha, BCrypt.gensalt());
-        await _database.customUpdate(
-          '''
-          UPDATE tafusuario 
-          SET descnome = ?, desclogin = ?, descsenha = ?
-          WHERE codusuario = ?
-          ''',
-          variables: [
-            Variable.withString(nome),
-            Variable.withString(login),
-            Variable.withString(hashedPassword),
-            Variable.withString(userId),
-          ],
-          updates: {_database.tafusuario},
-        );
-      } else {
-        // Update without password
-        await _database.customUpdate(
-          '''
-          UPDATE tafusuario 
-          SET descnome = ?, desclogin = ?
-          WHERE codusuario = ?
-          ''',
-          variables: [
-            Variable.withString(nome),
-            Variable.withString(login),
-            Variable.withString(userId),
-          ],
-          updates: {_database.tafusuario},
-        );
-      }
+      await (_database.update(_database.tafusuario)
+            ..where((u) => u.codusuario.equals(userId)))
+          .write(companion);
+    } on AppException {
+      rethrow;
     } catch (e) {
-      throw Exception('Erro ao atualizar usuário: ${e.toString()}');
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao atualizar usuário: $e',
+      );
     }
   }
 
+  @override
   Future<void> register({
     required String name,
     required String login,
@@ -171,76 +141,70 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      // Check if user already exists
-      final existingUser = await _database
-          .customSelect(
-            'SELECT * FROM tafusuario WHERE desclogin = ?',
-            variables: [Variable.withString(login)],
-            readsFrom: {_database.tafusuario},
-          )
-          .getSingleOrNull();
-
+      final existingUser =
+          await (_database.select(_database.tafusuario)
+                ..where((u) => u.desclogin.equals(login)))
+              .getSingleOrNull();
       if (existingUser != null) {
-        throw Exception('Usuário já existe');
+        throw const AuthException(AppErrorCode.userAlreadyExists);
       }
 
-      // Fetch default codunidade
       final unidade = await _database
-          .customSelect(
-            'SELECT codunidade FROM tafunidade LIMIT 1',
-            readsFrom: {_database.tafunidade},
-          )
+          .select(_database.tafunidade)
           .getSingleOrNull();
       if (unidade == null) {
-        throw Exception('Nenhuma unidade encontrada. Contate o administrador.');
+        throw const DatabaseException(AppErrorCode.noUnit);
       }
-      final codunidade = unidade.read<String>('codunidade');
 
-      // Fetch default codperfil
       final perfil = await _database
-          .customSelect(
-            'SELECT codperfil FROM tafperfil LIMIT 1',
-            readsFrom: {_database.tafperfil},
-          )
+          .select(_database.tafperfil)
           .getSingleOrNull();
       if (perfil == null) {
-        throw Exception('Nenhum perfil encontrado. Contate o administrador.');
+        throw const DatabaseException(AppErrorCode.noProfile);
       }
-      final codperfil = perfil.read<String>('codperfil');
 
-      // Fetch default codequipe
       final equipe = await _database
-          .customSelect(
-            'SELECT codequipe FROM tafequipe LIMIT 1',
-            readsFrom: {_database.tafequipe},
-          )
+          .select(_database.tafequipe)
           .getSingleOrNull();
       if (equipe == null) {
-        throw Exception('Nenhuma equipe encontrada. Contate o administrador.');
+        throw const DatabaseException(AppErrorCode.noTeam);
       }
-      final codequipe = equipe.read<String>('codequipe');
 
-      final hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-      final uuid = const Uuid().v4();
-
-      await _database.customStatement(
-        '''
-        INSERT INTO tafusuario (codusuario, codunidade, codperfil, codequipe, descnome, desclogin, descemail, descsenha)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''',
-        [
-          uuid,
-          codunidade,
-          codperfil,
-          codequipe,
-          name,
-          login,
-          email,
-          hashedPassword,
-        ],
-      );
+      await _database
+          .into(_database.tafusuario)
+          .insert(
+            TafusuarioCompanion.insert(
+              codusuario: const Uuid().v4(),
+              codunidade: unidade.codunidade,
+              codperfil: perfil.codperfil,
+              codequipe: equipe.codequipe,
+              descnome: name,
+              desclogin: login,
+              descemail: email,
+              descsenha: BCrypt.hashpw(password, BCrypt.gensalt()),
+            ),
+          );
+    } on AppException {
+      rethrow;
     } catch (e) {
-      throw Exception('Erro ao registrar usuário: ${e.toString()}');
+      throw DatabaseException(
+        AppErrorCode.database,
+        details: 'Erro ao registrar usuário: $e',
+      );
     }
+  }
+
+  AuthUserModel _buildAuthUser(TypedResult row) {
+    final usuario = row.readTable(_database.tafusuario);
+    final unidade = row.readTableOrNull(_database.tafunidade);
+    final perfil = row.readTableOrNull(_database.tafperfil);
+    return AuthUserModel(
+      codusuario: usuario.codusuario,
+      descnome: usuario.descnome,
+      desclogin: usuario.desclogin,
+      descemail: usuario.descemail,
+      descunidade: unidade?.descunidade ?? '',
+      descperfil: perfil?.descperfil ?? '',
+    );
   }
 }

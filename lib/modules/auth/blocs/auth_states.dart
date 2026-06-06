@@ -1,22 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:template_app/core/utils/exceptions.dart';
 import '../model/auth_user_model.dart';
 
-abstract class AuthState extends Equatable {
+sealed class AuthState extends Equatable {
   const AuthState();
 
   @override
   List<Object?> get props => [];
 }
 
-class AuthInitial extends AuthState {
+final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class AuthLoading extends AuthState {
+final class AuthLoading extends AuthState {
   const AuthLoading();
 }
 
-class Authenticated extends AuthState {
+final class Authenticated extends AuthState {
   final AuthUserModel user;
 
   const Authenticated(this.user);
@@ -25,19 +26,19 @@ class Authenticated extends AuthState {
   List<Object?> get props => [user];
 }
 
-class Unauthenticated extends AuthState {
+final class Unauthenticated extends AuthState {
   const Unauthenticated();
 }
 
-class AuthError extends AuthState {
-  final String message;
+final class AuthError extends AuthState {
+  final AppErrorCode code;
 
-  const AuthError(this.message);
+  const AuthError(this.code);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [code];
 }
 
-class UserUpdated extends AuthState {
+final class UserUpdated extends AuthState {
   const UserUpdated();
 }
